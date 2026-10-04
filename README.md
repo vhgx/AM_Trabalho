@@ -45,12 +45,23 @@ O **QA Gen Insights** é a evolução analítica do portal de engenharia de qual
 
 ### 1. Clonar ou Acessar a Pasta do Projeto
 ```bash
-cd "/Users/vitorh/Library/Mobile Documents/com~apple~CloudDocs/Documents/PostGrad/AM/AM_Trabalho"
+# Caso esteja clonando o repositório:
+git clone <url-do-repositorio>
+cd AM_Trabalho
+
+# Ou apenas navegue até a pasta raiz do projeto no seu terminal
 ```
 
-### 2. Ativar o Ambiente Virtual
+### 2. Criar e Ativar o Ambiente Virtual
 ```bash
+# Criar o ambiente virtual (caso ainda não exista)
+python3 -m venv portal-env
+
+# Ativar no macOS / Linux:
 source portal-env/bin/activate
+
+# Ativar no Windows:
+# portal-env\Scripts\activate
 ```
 
 ### 3. Instalar Dependências (caso necessário)

@@ -340,8 +340,10 @@ Esses modelos foram integrados diretamente no **QA Gen Web Portal**, provendo a 
 
 nb['cells'] = cells
 
-output_nb_path = "/Users/vitorh/Library/Mobile Documents/com~apple~CloudDocs/Documents/PostGrad/AM/AM_Trabalho/notebooks/AM_QA_Gen_Insights.ipynb"
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+output_nb_path = os.path.join(base_dir, "notebooks", "AM_QA_Gen_Insights.ipynb")
 with open(output_nb_path, 'w', encoding='utf-8') as f:
     nbf.write(nb, f)
 
 print(f"Notebook gerado com sucesso em: {output_nb_path}")
+
