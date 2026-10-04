@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Regressão — Prever Esforço de Teste - QA Gen Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-2">📈 Regressão — Prever Esforço de Teste</h1>
+        <p class="text-muted mb-4">
+            Informe as características do requisito e o modelo <strong>RandomForestRegressor</strong> 
+            irá prever o esforço estimado em horas para testá-lo.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Formulário -->
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">🔧 Parâmetros do Requisito</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="complexidade" class="form-label">
+                            <strong>Complexidade</strong> <span class="text-muted">(1-10)</span>
+                        </label>
+                        <input type="range" class="form-range" id="complexidade" name="complexidade" 
+                               min="1" max="10" value="{{ inputs.complexidade|default:'5' }}"
+                               oninput="document.getElementById('val_complexidade').textContent = this.value">
+                        <span class="badge bg-primary" id="val_complexidade">{{ inputs.complexidade|default:'5' }}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="num_integracoes" class="form-label">
+                            <strong>Nº de Integrações</strong> <span class="text-muted">(0-10)</span>
+                        </label>
+                        <input type="range" class="form-range" id="num_integracoes" name="num_integracoes" 
+                               min="0" max="10" value="{{ inputs.num_integracoes|default:'2' }}"
+                               oninput="document.getElementById('val_integracoes').textContent = this.value">
+                        <span class="badge bg-success" id="val_integracoes">{{ inputs.num_integracoes|default:'2' }}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tamanho_requisito" class="form-label">
+                            <strong>Tamanho do Requisito</strong> <span class="text-muted">(caracteres)</span>
+                        </label>
+                        <input type="number" class="form-control" id="tamanho_requisito" name="tamanho_requisito" 
+                               min="10" max="5000" value="{{ inputs.tamanho_requisito|default:'200' }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="num_regras_negocio" class="form-label">
+                            <strong>Nº de Regras de Negócio</strong> <span class="text-muted">(0-20)</span>
+                        </label>
+                        <input type="range" class="form-range" id="num_regras_negocio" name="num_regras_negocio" 
+                               min="0" max="20" value="{{ inputs.num_regras_negocio|default:'3' }}"
+                               oninput="document.getElementById('val_regras').textContent = this.value">
+                        <span class="badge bg-danger" id="val_regras">{{ inputs.num_regras_negocio|default:'3' }}</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        🚀 Prever Esforço
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="col-md-7">
+        {% if resultado %}
+        <!-- Previsão -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">✅ Resultado da Previsão</h5>
+            </div>
+            <div class="card-body text-center">
+                <h1 class="display-3 text-primary fw-bold">{{ resultado.previsao }}h</h1>
+                <p class="text-muted">Esforço estimado para testar este requisito</p>
+            </div>
+        </div>
+
+        <!-- Métricas do Modelo -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">📊 Métricas do Modelo (RandomForestRegressor)</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <h4 class="text-primary">{{ resultado.metricas.r2 }}</h4>
+                        <small class="text-muted">R² Score</small>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="text-warning">{{ resultado.metricas.mae }}</h4>
+                        <small class="text-muted">MAE</small>
+                    </div>
+                    <div class="col-md-4">
+                        <h4 class="text-danger">{{ resultado.metricas.rmse }}</h4>
+                        <small class="text-muted">RMSE</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráfico de Importância -->
+        {% if grafico %}
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">📈 Importância das Features</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico de Importância das Features" 
+                     class="img-fluid rounded">
+            </div>
+        </div>
+        {% endif %}
+
+        {% elif erro %}
+        <div class="alert alert-danger">
+            <strong>❌ Erro:</strong> {{ erro }}
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <strong>💡 Dica:</strong> Preencha os parâmetros ao lado e clique em "Prever Esforço" 
+            para obter a estimativa em horas gerada pelo modelo de Machine Learning.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

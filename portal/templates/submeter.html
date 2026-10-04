@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Submeter Requisito - QA Gen Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <h1 class="mb-4">📝 Submissão de Contexto</h1>
+        <p class="text-muted">
+            Descreva a funcionalidade ou regra de negócio que deseja validar. 
+            O agente de IA irá gerar automaticamente a análise, cenários BDD, 
+            casos de teste, código Playwright e edge cases.
+        </p>
+
+        <form method="POST" class="mt-4">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="titulo" class="form-label"><strong>Título do Requisito</strong></label>
+                <input type="text" class="form-control" id="titulo" name="titulo" 
+                       placeholder="Ex: Recuperação de senha por SMS" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="descricao" class="form-label"><strong>Requisito Funcional</strong></label>
+                <textarea class="form-control" id="descricao" name="descricao" rows="6" 
+                          placeholder="Ex: O usuário deve conseguir recuperar sua senha através de um código SMS enviado ao celular cadastrado. O sistema deve validar o código em até 5 minutos e permitir a criação de uma nova senha que atenda aos critérios de segurança." 
+                          required></textarea>
+                <div class="form-text">
+                    Descreva o requisito da forma mais completa possível. 
+                    Quanto mais detalhes, melhor será a geração dos testes.
+                </div>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary">
+                    🚀 Submeter e Processar
+                </button>
+                <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

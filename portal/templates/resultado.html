@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load portal_extras %}
+
+{% block title %}{{ requisito.titulo }} - Resultado - QA Gen Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1>🧪 {{ requisito.titulo }}</h1>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary">← Voltar</a>
+        </div>
+        
+        <div class="alert alert-secondary">
+            <strong>Requisito Original:</strong> {{ requisito.descricao }}
+        </div>
+
+        <!-- Abas de navegação (JavaScript básico para chaveamento) -->
+        <ul class="nav nav-tabs" id="resultadoTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="interpretacao-tab" data-bs-toggle="tab" 
+                        data-bs-target="#interpretacao" type="button" role="tab">
+                    📊 Interpretação
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bdd-tab" data-bs-toggle="tab" 
+                        data-bs-target="#bdd" type="button" role="tab">
+                    🥒 BDD / Gherkin
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="testcases-tab" data-bs-toggle="tab" 
+                        data-bs-target="#testcases" type="button" role="tab">
+                    📋 Casos de Teste
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="playwright-tab" data-bs-toggle="tab" 
+                        data-bs-target="#playwright" type="button" role="tab">
+                    💻 Playwright
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="edge-tab" data-bs-toggle="tab" 
+                        data-bs-target="#edge" type="button" role="tab">
+                    ⚠️ Edge Cases
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-3" id="resultadoTabContent">
+            <!-- Aba 1: Interpretação do Requisito -->
+            <div class="tab-pane fade show active" id="interpretacao" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Interpretação do Requisito e Análise</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre class="resultado-pre">{{ requisito.interpretacao }}</pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba 2: BDD Gherkin -->
+            <div class="tab-pane fade" id="bdd" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Cenários BDD (Gherkin)</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre class="resultado-pre codigo">{{ requisito.bdd }}</pre>
+                        <button class="btn btn-sm btn-outline-secondary mt-2" 
+                                onclick="copiarConteudo('bdd-code')">
+                            📋 Copiar código
+                        </button>
+                        <span id="bdd-code" style="display:none">{{ requisito.bdd }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba 3: Casos de Teste -->
+            <div class="tab-pane fade" id="testcases" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Tabela de Casos de Teste Estruturados</h5>
+                    </div>
+                    <div class="card-body table-responsive markdown-render">
+                        {{ requisito.casos_teste|markdownify }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba 4: Código Playwright -->
+            <div class="tab-pane fade" id="playwright" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">Automação: Código JavaScript/Playwright</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre class="resultado-pre codigo">{{ requisito.playwright }}</pre>
+                        <button class="btn btn-sm btn-outline-secondary mt-2" 
+                                onclick="copiarConteudo('playwright-code')">
+                            📋 Copiar código
+                        </button>
+                        <span id="playwright-code" style="display:none">{{ requisito.playwright }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba 5: Edge Cases -->
+            <div class="tab-pane fade" id="edge" role="tabpanel">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Edge Cases & Testes Extremos</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre class="resultado-pre">{{ requisito.edge_cases }}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3 text-muted">
+            <small>Gerado em: {{ requisito.atualizado_em|date:"d/m/Y H:i:s" }}</small>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // JavaScript básico para cópia de blocos de código (conforme proposta, seção 4)
+    function copiarConteudo(elementId) {
+        var conteudo = document.getElementById(elementId).textContent;
+        navigator.clipboard.writeText(conteudo).then(function() {
+            alert('Código copiado para a área de transferência!');
+        });
+    }
+</script>
+{% endblock %}

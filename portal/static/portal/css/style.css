@@ -1,0 +1,135 @@
+/* 
+ * Estilos customizados do QA Gen Web Portal
+ * CSS básico voltado para interação de interface (conforme proposta, seção 4)
+ */
+
+body {
+    background-color: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Estilização do conteúdo pré-formatado dos resultados da IA */
+.resultado-pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 20px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* Blocos de código com visual estilo IDE */
+.resultado-pre.codigo {
+    background-color: #0d1117;
+    color: #c9d1d9;
+    font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
+    border: 1px solid #30363d;
+}
+
+/* Cards dos resultados */
+.card {
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Tabela do dashboard */
+.table th {
+    font-size: 0.9rem;
+}
+
+/* Badge de status */
+.badge {
+    font-size: 0.8rem;
+}
+
+/* Estilização de Markdown Renderizado (Tabelas) */
+.markdown-render table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    vertical-align: top;
+    border-color: #dee2e6;
+    border-collapse: collapse;
+}
+
+.markdown-render table th,
+.markdown-render table td {
+    padding: 0.75rem;
+    border: 1px solid #dee2e6;
+}
+
+.markdown-render table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    background-color: #f8f9fa;
+}
+
+.markdown-render table tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* =============================================
+   Estilos para as páginas de Machine Learning
+   ============================================= */
+
+/* Cards de resultado ML */
+.card.shadow-sm {
+    transition: transform 0.2s ease;
+}
+
+.card.shadow-sm:hover {
+    transform: translateY(-2px);
+}
+
+/* Badges de prioridade grandes */
+.badge.fs-1 {
+    font-size: 1.8rem !important;
+    letter-spacing: 1px;
+}
+
+/* Range sliders customizados */
+.form-range::-webkit-slider-thumb {
+    cursor: pointer;
+}
+
+/* Valor exibido junto ao slider */
+.form-range + .badge {
+    font-size: 0.9rem;
+    min-width: 30px;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Progress bars nas probabilidades */
+.progress {
+    border-radius: 6px;
+}
+
+.progress-bar {
+    font-size: 0.75rem;
+    font-weight: 600;
+    transition: width 0.6s ease;
+}
+
+/* Resultado de previsão em destaque */
+.display-3 {
+    letter-spacing: -1px;
+}
+
+/* Tabela de centróides */
+.table-sm td,
+.table-sm th {
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* Gráfico de importância */
+.card-body img.img-fluid {
+    max-width: 100%;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+}
+

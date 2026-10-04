@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Erro - QA Gen Portal{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="alert alert-danger">
+            <h4 class="alert-heading">❌ Erro ao processar o requisito</h4>
+            <p>Ocorreu um erro ao se comunicar com o modelo de IA.</p>
+            <hr>
+            <p class="mb-0"><strong>Detalhes:</strong> {{ erro }}</p>
+        </div>
+
+        <div class="alert alert-info">
+            <strong>Dica:</strong> Verifique se o servidor do LLM está rodando 
+            (ex: LM Studio na porta 1234) e se as configurações do arquivo <code>.env</code> 
+            estão corretas.
+        </div>
+
+        <div class="d-flex gap-2">
+            <a href="{% url 'processar' requisito.pk %}" class="btn btn-primary">
+                🔄 Tentar Novamente
+            </a>
+            <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                ← Voltar ao Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

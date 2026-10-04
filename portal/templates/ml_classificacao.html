@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+
+{% block title %}Classificação — Prioridade de Requisito - QA Gen Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-2">🏷️ Classificação — Prioridade de Bug/Requisito</h1>
+        <p class="text-muted mb-4">
+            Informe os indicadores do bug ou requisito e o modelo <strong>GradientBoostingClassifier</strong> 
+            irá classificar a prioridade em: <span class="badge bg-secondary">Baixa</span>
+            <span class="badge bg-info">Média</span> <span class="badge bg-warning text-dark">Alta</span>
+            <span class="badge bg-danger">Crítica</span>.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Formulário -->
+    <div class="col-md-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">🔧 Indicadores do Requisito</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="impacto_usuario" class="form-label">
+                            <strong>Impacto no Usuário</strong> <span class="text-muted">(1-10)</span>
+                        </label>
+                        <input type="range" class="form-range" id="impacto_usuario" name="impacto_usuario" 
+                               min="1" max="10" value="{{ inputs.impacto_usuario|default:'5' }}"
+                               oninput="document.getElementById('val_impacto').textContent = this.value">
+                        <span class="badge bg-primary" id="val_impacto">{{ inputs.impacto_usuario|default:'5' }}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="complexidade_tecnica" class="form-label">
+                            <strong>Complexidade Técnica</strong> <span class="text-muted">(1-10)</span>
+                        </label>
+                        <input type="range" class="form-range" id="complexidade_tecnica" name="complexidade_tecnica" 
+                               min="1" max="10" value="{{ inputs.complexidade_tecnica|default:'5' }}"
+                               oninput="document.getElementById('val_complx').textContent = this.value">
+                        <span class="badge bg-success" id="val_complx">{{ inputs.complexidade_tecnica|default:'5' }}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="frequencia_uso" class="form-label">
+                            <strong>Frequência de Uso</strong> <span class="text-muted">(1-10)</span>
+                        </label>
+                        <input type="range" class="form-range" id="frequencia_uso" name="frequencia_uso" 
+                               min="1" max="10" value="{{ inputs.frequencia_uso|default:'5' }}"
+                               oninput="document.getElementById('val_freq').textContent = this.value">
+                        <span class="badge bg-info" id="val_freq">{{ inputs.frequencia_uso|default:'5' }}</span>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch"
+                                   id="tem_dependencia_externa" name="tem_dependencia_externa" value="1"
+                                   {% if inputs.tem_dependencia_externa %}checked{% endif %}>
+                            <label class="form-check-label" for="tem_dependencia_externa">
+                                <strong>Tem Dependência Externa?</strong>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="risco_seguranca" class="form-label">
+                            <strong>Risco de Segurança</strong> <span class="text-muted">(1-10)</span>
+                        </label>
+                        <input type="range" class="form-range" id="risco_seguranca" name="risco_seguranca" 
+                               min="1" max="10" value="{{ inputs.risco_seguranca|default:'5' }}"
+                               oninput="document.getElementById('val_risco').textContent = this.value">
+                        <span class="badge bg-danger" id="val_risco">{{ inputs.risco_seguranca|default:'5' }}</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        🚀 Classificar Prioridade
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resultado -->
+    <div class="col-md-7">
+        {% if resultado %}
+        <!-- Classificação -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">✅ Resultado da Classificação</h5>
+            </div>
+            <div class="card-body text-center">
+                {% if resultado.prioridade == 'Crítica' %}
+                    <span class="badge bg-danger fs-1 p-3">🔴 Crítica</span>
+                {% elif resultado.prioridade == 'Alta' %}
+                    <span class="badge bg-warning text-dark fs-1 p-3">🟠 Alta</span>
+                {% elif resultado.prioridade == 'Média' %}
+                    <span class="badge bg-info fs-1 p-3">🔵 Média</span>
+                {% else %}
+                    <span class="badge bg-secondary fs-1 p-3">⚪ Baixa</span>
+                {% endif %}
+                <p class="text-muted mt-3">Prioridade classificada pelo modelo</p>
+            </div>
+        </div>
+
+        <!-- Probabilidades -->
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-dark text-white">
+                <h5 class="mb-0">📊 Probabilidades por Classe</h5>
+            </div>
+            <div class="card-body">
+                {% for classe, prob in resultado.probabilidades.items %}
+                <div class="mb-2">
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong>{{ classe }}</strong>
+                        <span>{{ prob }}%</span>
+                    </div>
+                    <div class="progress" style="height: 22px;">
+                        {% if classe == 'Crítica' %}
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ prob }}%">{{ prob }}%</div>
+                        {% elif classe == 'Alta' %}
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ prob }}%">{{ prob }}%</div>
+                        {% elif classe == 'Média' %}
+                        <div class="progress-bar bg-info" role="progressbar" style="width: {{ prob }}%">{{ prob }}%</div>
+                        {% else %}
+                        <div class="progress-bar bg-secondary" role="progressbar" style="width: {{ prob }}%">{{ prob }}%</div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Métricas do Modelo -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">📋 Métricas do Modelo (GradientBoostingClassifier)</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        <h4 class="text-primary">{{ resultado.metricas.acuracia }}</h4>
+                        <small class="text-muted">Acurácia</small>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="text-success">{{ resultado.metricas.f1_macro }}</h4>
+                        <small class="text-muted">F1-Score (Macro)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% elif erro %}
+        <div class="alert alert-danger">
+            <strong>❌ Erro:</strong> {{ erro }}
+        </div>
+        {% else %}
+        <div class="alert alert-info">
+            <strong>💡 Dica:</strong> Preencha os indicadores ao lado e clique em "Classificar Prioridade" 
+            para que o modelo de Machine Learning classifique a prioridade do requisito ou bug.
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
