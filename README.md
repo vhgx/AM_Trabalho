@@ -1,122 +1,133 @@
-# 🧪 QA Gen Web Portal
+# 🧪 QA Gen Web Portal & Insights
 
-**QA Gen Web Portal** é uma plataforma web desenvolvida em Django para a geração automatizada de artefatos de teste de software utilizando Inteligência Artificial (LLMs). 
+> **Plataforma Web para Geração Automatizada de Testes e Inteligência Analítica de Qualidade via Aprendizado de Máquina**  
+> *Projeto Aplicado &bull; Pós-Graduação em Inteligência Artificial &bull; INF / UFG*
 
-Este projeto é a evolução do agente **ePrompt (QA Test Generator Agent)**, transformando uma ferramenta de linha de comando em um portal SaaS (Software as a Service) centralizado, capaz de persistir dados e exibir resultados de forma rica e organizada.
+---
+
+## 🎯 Visão Geral
+
+O **QA Gen Insights** é a evolução analítica do portal de engenharia de qualidade. Além de gerar cenários BDD, casos de teste manuais e scripts Playwright via LLM, o sistema agora integra uma camada de **Aprendizado de Máquina Clássico (scikit-learn)** que responde a 3 perguntas essenciais para a tomada de decisão do time:
+
+1. **📈 Regressão:** *Quantas horas de esforço de teste este requisito exigirá?*  
+   Modelos: `RandomForestRegressor` ($R^2 \approx 0.93$) e `LinearRegression` ($R^2 \approx 0.96$). Avaliado via K-Fold CV.
+2. **🛡️ Classificação:** *Qual o risco deste requisito gerar defeitos em produção?*  
+   Modelos: `LogisticRegression` ($\text{AUC} \approx 0.77$) e `DecisionTreeClassifier`. Calibração de limiar ($\tau = 0.35$) focada em maximizar o **Recall**.
+3. **🔬 Clusterização & PCA:** *Qual o perfil operacional deste requisito no histórico do time?*  
+   Modelos: `KMeans` ($K=4$, Silhueta $\approx 0.48$) com redução de dimensionalidade via `PCA 2D` ($\approx 75\%$ de variância retida). Identifica arquétipos como *CRUD Simples*, *Fluxo Complexo*, *Integração Pesada* e *Crítico / Segurança*.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- **Painel Central (Dashboard):** Visualize e gerencie todos os requisitos submetidos e seus respectivos artefatos gerados.
-- **Submissão de Contexto:** Interface amigável para descrever requisitos funcionais ou histórias de usuário.
-- **Pipeline de IA Multidimensional:** O sistema processa o requisito em 5 etapas sequenciais:
-  1. **Análise e Interpretação:** Extração de atores, pré-condições e regras de negócio.
-  2. **Cenários BDD (Gherkin):** Escrita de funcionalidades seguindo o padrão Given/When/Then.
-  3. **Casos de Teste Estruturados:** Tabela detalhada para execução de testes manuais.
-  4. **Automação (Playwright):** Geração de scripts de teste E2E em JavaScript/Node.js.
-  5. **Edge Cases:** Identificação de cenários extremos e pontos de falha de segurança.
-- **Visualização Rica:** Resultados exibidos em abas com formatação de código (IDE-style) e tabelas renderizadas.
-- **Machine Learning — Regressão:** Modelo `RandomForestRegressor` para prever o esforço de teste (em horas) com base em features do requisito. Exibe métricas (R², MAE, RMSE) e gráfico de importância das features.
-- **Machine Learning — Classificação:** Modelo `GradientBoostingClassifier` para classificar a prioridade de bugs/requisitos em Crítica, Alta, Média ou Baixa. Exibe probabilidades por classe e métricas (Acurácia, F1-Score).
-- **Machine Learning — Clusterização:** Modelo `KMeans` para agrupar requisitos similares sem rótulos prévios (Aprendizado Não Supervisionado). Exibe clusters, centróides e métricas (Inércia, Silhouette Score).
+- **Painel Central (Dashboard):** Visualização e rastreamento de todos os requisitos funcionais submetidos.
+- **Pipeline de IA Multidimensional:** Extração de regras, geração de BDD (Gherkin), tabela de testes e automação Playwright.
+- **Aba "🤖 Insights de ML":** Na visualização de cada requisito, exibe em tempo real o esforço previsto, o risco de defeito, o perfil aglomerado, as recomendações técnicas do QA e a tabela de features extraídas.
+- **Laboratórios Interativos de Machine Learning:**
+  - `/ml/regressao/`: Simulação de parâmetros, tabela comparativa de métricas ($R^2$, MAE, RMSE) e gráfico de importância de atributos.
+  - `/ml/classificacao/`: Controle dinâmico do limiar de corte (*threshold*), matriz de confusão e curva ROC.
+  - `/ml/clusterizacao/`: Projeção cartesiana PCA 2D destacando o requisito sob análise contra os centróides e clusters históricos.
+- **Jupyter Notebook Acadêmico:** Estudo experimental completo e reprodutível em `notebooks/AM_QA_Gen_Insights.ipynb`.
 
 ---
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Backend:** [Python 3](https://www.python.org/) & [Django 4.2](https://www.djangoproject.com/)
-- **Frontend:** HTML5, CSS3, JavaScript & [Bootstrap 5](https://getbootstrap.com/)
-- **IA/LLM:** Integração via [OpenAI API](https://openai.com/blog/openai-api) (compatível com LM Studio, Gemini, Anthropic)
-- **Banco de Dados:** SQLite (Relacional)
-- **Machine Learning:** [scikit-learn](https://scikit-learn.org/) (RandomForest, GradientBoosting, KMeans), [NumPy](https://numpy.org/), [Matplotlib](https://matplotlib.org/)
-- **Estilização de Texto:** [Markdown](https://pypi.org/project/Markdown/) para renderização de tabelas e blocos de código.
+- **Backend:** Python 3.9+, Django 4.2+
+- **Machine Learning:** `scikit-learn`, `numpy`, `pandas`, `matplotlib`, `seaborn`, `joblib`
+- **Frontend:** HTML5, CSS3, JavaScript & Bootstrap 5 (`django-bootstrap5`)
+- **Persistência:** SQLite3 e serialização binária com Joblib (`ml_models/`)
+- **Ambiente Interativo:** Jupyter Notebook (`nbconvert`, `ipykernel`)
 
 ---
 
-## ⚙️ Instalação e Configuração
+## ⚙️ Instalação e Execução
 
-### 1. Clonar o Repositório
+### 1. Clonar ou Acessar a Pasta do Projeto
 ```bash
-git clone https://github.com/vhgx/qa-gen-portal.git
-cd qa-gen-portal
+cd "/Users/vitorh/Library/Mobile Documents/com~apple~CloudDocs/Documents/PostGrad/AM/AM_Trabalho"
 ```
 
-### 2. Configurar o Ambiente Virtual
+### 2. Ativar o Ambiente Virtual
 ```bash
-# Criar o ambiente
-python3 -m venv portal-env
-
-# Ativar no Mac/Linux
 source portal-env/bin/activate
-
-# Ativar no Windows
-# portal-env\Scripts\activate
 ```
 
-### 3. Instalar Dependências
+### 3. Instalar Dependências (caso necessário)
 ```bash
 pip install -r requirements.txt
-# Ou manualmente:
-pip install django django-bootstrap-v5 openai python-dotenv django-tables2 markdown scikit-learn numpy matplotlib
 ```
 
-### 4. Configurar Variáveis de Ambiente
-Crie um arquivo `.env` na raiz do projeto com as seguintes chaves:
-```env
-OPENAI_BASE_URL=http://localhost:1234/v1  # Ou URL da OpenAI/Gemini
-OPENAI_API_KEY=lm-studio                  # Sua chave de API
-OPENAI_MODEL=local-model                  # Nome do modelo
-```
-
-### 5. Migrar o Banco de Dados
+### 4. Gerar o Dataset e Treinar os Modelos de ML
+O sistema já conta com o dataset e os modelos pré-treinados, mas podem ser reexecutados a qualquer momento:
 ```bash
-python manage.py makemigrations
-python manage.py migrate
+# Gerar base sintética calibrada com 400 requisitos
+python scripts/gerar_dataset.py
+
+# Treinar os pipelines e salvar em ml_models/
+python manage.py treinar_modelos
 ```
 
-### 6. Executar o Servidor
+### 5. Executar o Servidor Web
 ```bash
 python manage.py runserver
 ```
-Acesse em: [http://127.0.0.1:8000](http://127.0.0.1:8000)
+Acesse no navegador: **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
 
 ---
 
-## 📂 Estrutura do Projeto
+## 🧪 Testes Automatizados
 
-- `qagen/`: Configurações centrais do projeto Django.
-- `portal/`: Aplicação principal contendo a lógica de negócio.
-  - `services.py`: Motor de comunicação com a IA e orquestração do pipeline de QA.
-  - `ml_services.py`: Motor de Machine Learning (Regressão, Classificação, Clusterização).
-  - `models.py`: Estrutura de persistência dos requisitos e resultados.
-  - `views.py`: Views do Django (Dashboard, Submissão, Resultado, ML).
-  - `urls.py`: Rotas da aplicação.
-  - `tests.py`: Testes automatizados (Django TestCase).
-  - `templates/`: Camada de apresentação (HTML/Django Templates).
-  - `static/`: Arquivos CSS e assets visuais.
-  - `templatetags/`: Filtros customizados para renderização de Markdown.
-
----
-
-## 🤖 Machine Learning
-
-O portal inclui 3 funcionalidades de Machine Learning acessíveis via menu **"🤖 Machine Learning"** na navbar:
-
-| Funcionalidade | URL | Modelo | Tipo de Aprendizado |
-|---|---|---|---|
-| **Regressão** — Prever Esforço de Teste | `/ml/regressao/` | `RandomForestRegressor` | Supervisionado (saída contínua) |
-| **Classificação** — Prioridade de Requisito | `/ml/classificacao/` | `GradientBoostingClassifier` | Supervisionado (saída categórica) |
-| **Clusterização** — Agrupar Requisitos | `/ml/clusterizacao/` | `KMeans` | Não Supervisionado |
-
-Os modelos são treinados com datasets sintéticos gerados automaticamente (seed fixa para reprodutibilidade) e cacheados em memória após o primeiro uso.
-
-### Executar Testes
+Para executar a suíte completa de testes unitários e de integração de Machine Learning:
 ```bash
 python manage.py test portal -v2
 ```
 
 ---
 
-## 🎓 Contexto Acadêmico
-Este projeto foi desenvolvido como trabalho prático da disciplina de **Framework de Desenvolvimento Web** no curso de Pós-Graduação, integrando conhecimentos de engenharia de prompt, arquitetura MVC, consumo de APIs externas e Machine Learning (Regressão, Classificação e Clusterização).
+## 📓 Jupyter Notebook Didático
+
+Para visualizar ou reexecutar o notebook da disciplina com todos os gráficos e análises teóricas:
+```bash
+# Abrir o ambiente interativo
+jupyter notebook notebooks/AM_QA_Gen_Insights.ipynb
+
+# Ou reexecutar em lote via linha de comando
+jupyter nbconvert --to notebook --execute notebooks/AM_QA_Gen_Insights.ipynb --inplace
+```
+
+---
+
+## 📂 Estrutura de Diretórios
+
+```
+AM_Trabalho/
+├── data/
+│   └── historico_requisitos.csv      # Dataset simulado com 400 registros
+├── docs/
+│   └── proposta_trabalho_am.md       # Proposta acadêmica da disciplina
+├── ml_models/
+│   ├── regressao.joblib              # Pipeline RandomForest treinado
+│   ├── regressao_linear.joblib       # Pipeline LinearRegression treinado
+│   ├── classificacao.joblib          # Pipeline Regressão Logística treinado
+│   ├── classificacao_arvore.joblib   # Pipeline Árvore de Decisão treinado
+│   ├── clusterizacao.joblib          # Artefatos KMeans + PCA + Centróides
+│   └── metricas.json                 # Métricas consolidadas de validação cruzada
+├── notebooks/
+│   └── AM_QA_Gen_Insights.ipynb      # Notebook acadêmico com experimentos e gráficos
+├── portal/
+│   ├── ml/
+│   │   └── features.py               # Extrator automatizado de features por regex
+│   ├── ml_services.py                # Motor central de AM (treino, predição, plots)
+│   ├── management/commands/
+│   │   └── treinar_modelos.py        # Comando 'python manage.py treinar_modelos'
+│   ├── models.py                     # Modelo Requisito
+│   ├── views.py                      # Views do Django com suporte a insights de ML
+│   ├── templates/                    # Templates HTML atualizados
+│   └── tests.py                      # Suíte de testes automatizados
+├── scripts/
+│   ├── gerar_dataset.py              # Gerador do dataset com semente fixa
+│   └── criar_notebook.py             # Script construtor do Jupyter Notebook
+├── requirements.txt                  # Lista de dependências
+└── manage.py                         # CLI do Django
+```

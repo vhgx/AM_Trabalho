@@ -1,0 +1,401 @@
+id,titulo,arquetipo,num_regras_negocio,num_cenarios_bdd,num_casos_teste,num_edge_cases,num_integracoes,envolve_seguranca,tamanho_descricao,esforco_teste_horas,gerou_bug_producao
+1,Cálculo de alíquotas fiscais interestaduais (Lote #001),Fluxo Complexo,6,5,23,6,0,0,336,11.7,0
+2,Renovação de tokens OAuth2 e revogação de sessões (Lote #002),Crítico / Segurança,6,5,12,10,3,1,184,12.4,0
+3,Webhook assíncrono de notificações de pagamento (Lote #003),Integração Pesada,7,3,15,5,4,0,194,13.3,1
+4,Motor de precificação dinâmica para alta demanda (Lote #004),Fluxo Complexo,13,6,18,4,2,0,154,14.2,0
+5,Visualização de detalhes de pedidos antigos (Lote #005),CRUD Simples,1,2,5,1,1,1,43,7.7,0
+6,Exclusão lógica de fornecedores inativos (Lote #006),CRUD Simples,2,3,4,2,1,0,106,4.8,0
+7,Exclusão lógica de fornecedores inativos (Lote #007),CRUD Simples,4,1,2,3,0,0,101,4.1,0
+8,Autenticação multifator (MFA) via TOTP e SMS (Lote #008),Crítico / Segurança,9,8,13,7,1,1,319,13.8,1
+9,Esteira de renegociação de dívidas parceladas (Lote #009),Fluxo Complexo,10,8,12,5,0,0,198,11.9,0
+10,Integração com transportadoras e cálculo de frete externo (Lote #010),Integração Pesada,5,6,12,4,5,0,135,12.7,0
+11,Listagem com paginação de usuários (Lote #011),CRUD Simples,4,2,3,2,0,0,139,3.5,0
+12,Renovação de tokens OAuth2 e revogação de sessões (Lote #012),Crítico / Segurança,8,8,10,10,2,1,241,16.5,0
+13,Sincronização bidirecional com CRM Salesforce (Lote #013),Integração Pesada,4,5,10,4,3,0,296,11.9,0
+14,Edição de dados cadastrais do cliente (Lote #014),CRUD Simples,3,1,6,1,0,0,40,4.6,0
+15,Edição de dados cadastrais do cliente (Lote #015),CRUD Simples,1,3,6,1,1,0,56,4.2,0
+16,Visualização de detalhes de pedidos antigos (Lote #016),CRUD Simples,1,2,2,1,0,0,134,3.7,0
+17,Consulta de tabela de preços vigentes (Lote #017),CRUD Simples,3,3,3,1,0,0,133,5.4,0
+18,Motor de precificação dinâmica para alta demanda (Lote #018),Fluxo Complexo,10,9,23,4,2,0,315,16.8,0
+19,Aprovação multinível de adiantamento financeiro (Lote #019),Fluxo Complexo,8,11,11,6,0,0,365,12.7,0
+20,Cadastro de categorias de produtos (Lote #020),CRUD Simples,1,1,5,2,1,0,123,4.7,0
+21,Esteira de renegociação de dívidas parceladas (Lote #021),Fluxo Complexo,8,11,18,5,1,0,281,13.9,0
+22,Edição de dados cadastrais do cliente (Lote #022),CRUD Simples,3,1,3,1,0,0,44,2.7,0
+23,Consulta de tabela de preços vigentes (Lote #023),CRUD Simples,1,1,2,2,1,0,129,3.8,0
+24,Cálculo de alíquotas fiscais interestaduais (Lote #024),Fluxo Complexo,11,11,17,5,2,0,230,17.3,0
+25,Esteira de renegociação de dívidas parceladas (Lote #025),Fluxo Complexo,9,11,17,4,2,0,279,16.4,0
+26,Integração com transportadoras e cálculo de frete externo (Lote #026),Integração Pesada,5,5,7,5,5,0,238,12.0,1
+27,Cadastro rápido de tags de conteúdo (Lote #027),CRUD Simples,2,2,5,1,1,0,107,6.3,0
+28,Fechamento contábil mensal com conciliação (Lote #028),Fluxo Complexo,11,6,17,3,2,0,250,16.1,0
+29,Processamento de comissões de vendas por metas (Lote #029),Fluxo Complexo,11,9,18,3,0,0,347,14.6,0
+30,Consulta de tabela de preços vigentes (Lote #030),CRUD Simples,2,2,2,3,0,0,75,4.4,1
+31,Regras de elegibilidade para seguros corporativos (Lote #031),Fluxo Complexo,6,10,17,5,1,1,228,13.2,0
+32,Visualização de detalhes de pedidos antigos (Lote #032),CRUD Simples,2,2,5,3,0,0,51,4.2,0
+33,Visualização de detalhes de pedidos antigos (Lote #033),CRUD Simples,2,3,5,1,0,0,89,6.4,0
+34,Anonimização e direito ao esquecimento LGPD (Lote #034),Crítico / Segurança,8,5,11,6,3,1,260,17.2,0
+35,Proteção contra brute-force e rate limit em endpoints (Lote #035),Crítico / Segurança,4,8,9,11,1,1,296,11.6,0
+36,Integração com transportadoras e cálculo de frete externo (Lote #036),Integração Pesada,6,6,13,6,3,1,179,13.9,0
+37,Edição de dados cadastrais do cliente (Lote #037),CRUD Simples,2,2,5,1,1,0,79,6.6,0
+38,Visualização de detalhes de pedidos antigos (Lote #038),CRUD Simples,2,1,2,1,0,0,105,4.3,0
+39,Emissão de NF-e via SEFAZ com retry e fallback (Lote #039),Integração Pesada,5,5,8,5,6,1,276,17.1,1
+40,Esteira de renegociação de dívidas parceladas (Lote #040),Fluxo Complexo,11,5,10,7,0,0,182,11.5,0
+41,Edição de dados cadastrais do cliente (Lote #041),CRUD Simples,2,1,6,3,0,0,91,5.2,0
+42,Motor de precificação dinâmica para alta demanda (Lote #042),Fluxo Complexo,9,8,22,4,2,0,313,14.0,1
+43,Edição de dados cadastrais do cliente (Lote #043),CRUD Simples,2,2,3,2,0,0,101,3.7,0
+44,Criptografia de dados de cartão de crédito no cofre (Lote #044),Crítico / Segurança,7,7,11,9,1,1,286,13.9,0
+45,Consulta de tabela de preços vigentes (Lote #045),CRUD Simples,3,1,2,2,1,0,60,4.3,0
+46,Webhook assíncrono de notificações de pagamento (Lote #046),Integração Pesada,5,6,10,4,7,0,299,15.4,1
+47,Exclusão lógica de fornecedores inativos (Lote #047),CRUD Simples,1,2,4,2,0,0,73,3.6,1
+48,Processamento de comissões de vendas por metas (Lote #048),Fluxo Complexo,8,10,17,3,2,0,237,15.5,0
+49,Aprovação multinível de adiantamento financeiro (Lote #049),Fluxo Complexo,7,9,10,3,0,0,267,11.1,1
+50,Cadastro rápido de tags de conteúdo (Lote #050),CRUD Simples,1,1,4,3,0,0,69,5.4,0
+51,Recuperação de senha com link temporal assinado (Lote #051),Crítico / Segurança,6,5,9,11,1,1,273,13.4,1
+52,Envio de mensagens transacionais via mensageria Kafka (Lote #052),Integração Pesada,5,6,15,5,5,1,243,17.1,1
+53,Proteção contra brute-force e rate limit em endpoints (Lote #053),Crítico / Segurança,6,8,15,11,1,1,398,15.5,0
+54,Anonimização e direito ao esquecimento LGPD (Lote #054),Crítico / Segurança,6,6,11,9,1,1,341,12.4,0
+55,Motor de precificação dinâmica para alta demanda (Lote #055),Fluxo Complexo,12,5,16,7,2,0,296,13.6,0
+56,Proteção contra brute-force e rate limit em endpoints (Lote #056),Crítico / Segurança,8,7,17,7,3,1,278,17.4,0
+57,Consulta de tabela de preços vigentes (Lote #057),CRUD Simples,1,2,6,3,1,0,63,4.7,0
+58,Cadastro rápido de tags de conteúdo (Lote #058),CRUD Simples,4,1,3,3,0,0,105,3.5,0
+59,Edição de dados cadastrais do cliente (Lote #059),CRUD Simples,2,2,3,1,0,0,114,4.1,0
+60,Cadastro de categorias de produtos (Lote #060),CRUD Simples,2,2,2,1,0,0,126,3.1,0
+61,Aprovação multinível de adiantamento financeiro (Lote #061),Fluxo Complexo,14,9,16,4,0,1,362,18.8,1
+62,Exclusão lógica de fornecedores inativos (Lote #062),CRUD Simples,2,3,2,3,0,0,68,2.6,0
+63,Webhook assíncrono de notificações de pagamento (Lote #063),Integração Pesada,5,5,13,6,4,0,271,12.5,1
+64,Fechamento contábil mensal com conciliação (Lote #064),Fluxo Complexo,9,7,12,6,2,1,258,15.9,0
+65,Cadastro de categorias de produtos (Lote #065),CRUD Simples,1,1,2,1,0,0,64,3.4,0
+66,Fechamento contábil mensal com conciliação (Lote #066),Fluxo Complexo,8,10,15,4,2,0,336,14.7,1
+67,Consulta de tabela de preços vigentes (Lote #067),CRUD Simples,4,3,6,1,0,0,109,7.1,1
+68,Sincronização bidirecional com CRM Salesforce (Lote #068),Integração Pesada,4,6,12,4,4,0,254,12.4,0
+69,Cadastro rápido de tags de conteúdo (Lote #069),CRUD Simples,1,2,5,3,0,0,56,2.3,0
+70,Auditoria de transações sensíveis de administradores (Lote #070),Crítico / Segurança,5,6,12,8,2,1,342,14.8,0
+71,Integração com gateway bancário PIX e Boleto (Lote #071),Integração Pesada,7,4,14,8,4,0,289,13.2,1
+72,Listagem com paginação de usuários (Lote #072),CRUD Simples,2,3,6,1,0,0,78,7.0,0
+73,Cadastro de categorias de produtos (Lote #073),CRUD Simples,2,2,2,3,0,0,133,4.0,0
+74,Sincronização bidirecional com CRM Salesforce (Lote #074),Integração Pesada,6,4,10,4,3,1,192,12.9,1
+75,Emissão de NF-e via SEFAZ com retry e fallback (Lote #075),Integração Pesada,4,3,10,6,6,0,182,11.9,0
+76,Webhook assíncrono de notificações de pagamento (Lote #076),Integração Pesada,6,6,13,7,7,1,236,17.8,1
+77,Sincronização bidirecional com CRM Salesforce (Lote #077),Integração Pesada,5,6,11,8,7,1,296,19.6,1
+78,Edição de dados cadastrais do cliente (Lote #078),CRUD Simples,2,3,3,2,0,0,71,6.2,0
+79,Cálculo de alíquotas fiscais interestaduais (Lote #079),Fluxo Complexo,14,8,23,7,1,0,333,17.1,0
+80,Cadastro de categorias de produtos (Lote #080),CRUD Simples,2,2,2,3,0,0,98,2.9,1
+81,Criptografia de dados de cartão de crédito no cofre (Lote #081),Crítico / Segurança,8,5,9,11,1,1,335,13.0,0
+82,Esteira de renegociação de dívidas parceladas (Lote #082),Fluxo Complexo,8,6,12,4,2,1,182,14.5,0
+83,Cadastro de categorias de produtos (Lote #083),CRUD Simples,3,3,2,1,0,0,81,4.9,0
+84,Visualização de detalhes de pedidos antigos (Lote #084),CRUD Simples,3,1,3,1,0,0,49,3.4,0
+85,Listagem com paginação de usuários (Lote #085),CRUD Simples,4,2,6,1,0,0,52,5.4,0
+86,Cadastro rápido de tags de conteúdo (Lote #086),CRUD Simples,2,1,4,2,0,0,135,3.6,0
+87,Envio de mensagens transacionais via mensageria Kafka (Lote #087),Integração Pesada,7,4,9,7,6,0,136,14.3,1
+88,Regras de elegibilidade para seguros corporativos (Lote #088),Fluxo Complexo,13,7,11,4,1,1,178,18.2,0
+89,Renovação de tokens OAuth2 e revogação de sessões (Lote #089),Crítico / Segurança,8,6,8,11,3,1,238,14.3,1
+90,Aprovação multinível de adiantamento financeiro (Lote #090),Fluxo Complexo,7,9,13,3,2,0,188,14.0,0
+91,Listagem com paginação de usuários (Lote #091),CRUD Simples,3,2,5,2,0,0,95,5.4,0
+92,Emissão de NF-e via SEFAZ com retry e fallback (Lote #092),Integração Pesada,6,4,8,4,7,1,120,16.9,1
+93,Emissão de NF-e via SEFAZ com retry e fallback (Lote #093),Integração Pesada,3,3,13,7,4,1,146,12.5,0
+94,Regras de elegibilidade para seguros corporativos (Lote #094),Fluxo Complexo,7,8,16,5,0,0,330,11.8,1
+95,Importação em lote de extratos bancários via OFX (Lote #095),Integração Pesada,3,4,9,7,3,0,182,7.9,0
+96,Processamento de comissões de vendas por metas (Lote #096),Fluxo Complexo,6,9,11,4,1,1,315,14.8,0
+97,Regras de elegibilidade para seguros corporativos (Lote #097),Fluxo Complexo,14,7,15,5,0,0,270,14.7,0
+98,Fechamento contábil mensal com conciliação (Lote #098),Fluxo Complexo,9,5,19,4,0,0,182,11.2,0
+99,Consulta de tabela de preços vigentes (Lote #099),CRUD Simples,3,2,3,2,0,0,83,4.7,0
+100,Consulta de tabela de preços vigentes (Lote #100),CRUD Simples,1,2,2,3,0,0,115,3.7,0
+101,Consulta de tabela de preços vigentes (Lote #101),CRUD Simples,3,3,4,2,0,0,42,6.2,0
+102,Fechamento contábil mensal com conciliação (Lote #102),Fluxo Complexo,14,9,12,4,2,1,249,19.5,1
+103,Edição de dados cadastrais do cliente (Lote #103),CRUD Simples,4,2,3,3,0,1,98,6.2,0
+104,Esteira de renegociação de dívidas parceladas (Lote #104),Fluxo Complexo,11,11,10,6,0,1,308,17.4,0
+105,Renovação de tokens OAuth2 e revogação de sessões (Lote #105),Crítico / Segurança,7,7,15,7,1,1,255,13.7,0
+106,Exclusão lógica de fornecedores inativos (Lote #106),CRUD Simples,2,3,3,2,0,1,97,7.8,0
+107,Processamento de comissões de vendas por metas (Lote #107),Fluxo Complexo,13,8,23,4,1,1,268,18.4,1
+108,Integração com transportadoras e cálculo de frete externo (Lote #108),Integração Pesada,6,3,13,4,6,0,189,12.4,1
+109,Edição de dados cadastrais do cliente (Lote #109),CRUD Simples,1,1,2,1,0,0,49,1.0,0
+110,Cadastro de categorias de produtos (Lote #110),CRUD Simples,1,3,5,1,0,0,67,3.6,0
+111,Exclusão lógica de fornecedores inativos (Lote #111),CRUD Simples,4,3,5,3,0,0,41,5.1,0
+112,Cadastro de categorias de produtos (Lote #112),CRUD Simples,3,3,6,1,0,0,90,6.1,0
+113,Proteção contra brute-force e rate limit em endpoints (Lote #113),Crítico / Segurança,6,5,14,9,2,1,310,13.0,0
+114,Sincronização bidirecional com CRM Salesforce (Lote #114),Integração Pesada,7,3,12,8,7,1,294,18.3,0
+115,Aprovação multinível de adiantamento financeiro (Lote #115),Fluxo Complexo,7,6,10,4,2,0,225,11.7,0
+116,Autenticação multifator (MFA) via TOTP e SMS (Lote #116),Crítico / Segurança,6,8,12,6,2,1,379,15.2,1
+117,Webhook assíncrono de notificações de pagamento (Lote #117),Integração Pesada,3,3,14,8,7,0,187,14.0,0
+118,Edição de dados cadastrais do cliente (Lote #118),CRUD Simples,2,2,3,1,0,0,114,2.7,0
+119,Auditoria de transações sensíveis de administradores (Lote #119),Crítico / Segurança,4,7,17,10,3,1,252,13.0,0
+120,Fechamento contábil mensal com conciliação (Lote #120),Fluxo Complexo,11,6,20,5,1,0,343,12.9,0
+121,Sincronização bidirecional com CRM Salesforce (Lote #121),Integração Pesada,6,3,15,4,6,0,167,14.7,1
+122,Proteção contra brute-force e rate limit em endpoints (Lote #122),Crítico / Segurança,9,5,12,8,3,1,276,15.6,0
+123,Cadastro rápido de tags de conteúdo (Lote #123),CRUD Simples,4,1,6,2,0,0,107,4.4,0
+124,Cadastro rápido de tags de conteúdo (Lote #124),CRUD Simples,4,3,3,2,0,0,43,5.2,1
+125,Exclusão lógica de fornecedores inativos (Lote #125),CRUD Simples,2,3,6,3,0,0,81,3.9,0
+126,Fechamento contábil mensal com conciliação (Lote #126),Fluxo Complexo,13,9,19,5,0,0,267,18.0,0
+127,Importação em lote de extratos bancários via OFX (Lote #127),Integração Pesada,4,6,15,4,7,1,271,16.1,1
+128,Anonimização e direito ao esquecimento LGPD (Lote #128),Crítico / Segurança,6,7,14,7,1,1,305,13.1,0
+129,Visualização de detalhes de pedidos antigos (Lote #129),CRUD Simples,3,1,4,2,0,0,61,4.1,0
+130,Processamento de comissões de vendas por metas (Lote #130),Fluxo Complexo,14,10,22,7,0,0,151,17.1,0
+131,Aprovação multinível de adiantamento financeiro (Lote #131),Fluxo Complexo,11,9,16,3,0,0,173,14.2,1
+132,Consulta de tabela de preços vigentes (Lote #132),CRUD Simples,4,1,2,3,0,0,109,4.1,0
+133,Listagem com paginação de usuários (Lote #133),CRUD Simples,4,1,5,3,0,0,111,5.5,0
+134,Edição de dados cadastrais do cliente (Lote #134),CRUD Simples,2,2,3,3,0,0,74,3.6,1
+135,Renovação de tokens OAuth2 e revogação de sessões (Lote #135),Crítico / Segurança,5,7,12,10,1,1,367,11.7,0
+136,Exclusão lógica de fornecedores inativos (Lote #136),CRUD Simples,1,3,6,3,0,0,44,4.7,0
+137,Regras de elegibilidade para seguros corporativos (Lote #137),Fluxo Complexo,10,8,15,4,2,1,165,15.4,1
+138,Integração com gateway bancário PIX e Boleto (Lote #138),Integração Pesada,3,5,7,8,4,0,121,9.7,0
+139,Fechamento contábil mensal com conciliação (Lote #139),Fluxo Complexo,12,6,13,4,2,0,299,15.3,0
+140,Anonimização e direito ao esquecimento LGPD (Lote #140),Crítico / Segurança,7,4,17,11,2,1,317,15.0,1
+141,Autenticação multifator (MFA) via TOTP e SMS (Lote #141),Crítico / Segurança,8,6,9,8,2,1,365,14.8,0
+142,Cadastro de categorias de produtos (Lote #142),CRUD Simples,1,2,2,3,0,0,93,2.8,0
+143,Regras de elegibilidade para seguros corporativos (Lote #143),Fluxo Complexo,14,9,14,4,0,0,174,14.9,0
+144,Exclusão lógica de fornecedores inativos (Lote #144),CRUD Simples,1,3,5,2,0,0,71,4.4,0
+145,Edição de dados cadastrais do cliente (Lote #145),CRUD Simples,3,3,6,3,0,0,50,5.6,0
+146,Cadastro rápido de tags de conteúdo (Lote #146),CRUD Simples,3,1,4,1,0,0,46,3.7,0
+147,Motor de precificação dinâmica para alta demanda (Lote #147),Fluxo Complexo,13,5,14,6,0,0,273,14.0,0
+148,Motor de precificação dinâmica para alta demanda (Lote #148),Fluxo Complexo,8,11,20,6,1,1,378,17.8,1
+149,Consulta de tabela de preços vigentes (Lote #149),CRUD Simples,3,1,6,2,0,0,44,3.4,0
+150,Cadastro rápido de tags de conteúdo (Lote #150),CRUD Simples,1,3,6,2,0,0,121,2.2,0
+151,Recuperação de senha com link temporal assinado (Lote #151),Crítico / Segurança,5,8,17,10,1,1,264,13.9,0
+152,Listagem com paginação de usuários (Lote #152),CRUD Simples,4,1,2,2,1,0,60,5.2,0
+153,Consulta de tabela de preços vigentes (Lote #153),CRUD Simples,4,1,2,3,0,0,71,4.4,1
+154,Cálculo de alíquotas fiscais interestaduais (Lote #154),Fluxo Complexo,12,7,10,7,2,0,301,15.0,0
+155,Proteção contra brute-force e rate limit em endpoints (Lote #155),Crítico / Segurança,9,7,11,8,3,1,187,15.0,0
+156,Consulta de tabela de preços vigentes (Lote #156),CRUD Simples,4,2,5,1,0,0,64,5.0,0
+157,Importação em lote de extratos bancários via OFX (Lote #157),Integração Pesada,4,4,10,7,6,0,121,13.3,0
+158,Integração com gateway bancário PIX e Boleto (Lote #158),Integração Pesada,4,5,15,4,4,0,272,12.9,0
+159,Listagem com paginação de usuários (Lote #159),CRUD Simples,2,2,5,1,0,0,60,4.8,0
+160,Webhook assíncrono de notificações de pagamento (Lote #160),Integração Pesada,6,3,7,8,7,0,245,14.2,0
+161,Fechamento contábil mensal com conciliação (Lote #161),Fluxo Complexo,11,10,20,3,1,0,162,15.3,0
+162,Processamento de comissões de vendas por metas (Lote #162),Fluxo Complexo,7,11,12,6,0,0,314,12.5,1
+163,Processamento de comissões de vendas por metas (Lote #163),Fluxo Complexo,12,9,23,6,2,1,378,20.1,1
+164,Cálculo de alíquotas fiscais interestaduais (Lote #164),Fluxo Complexo,10,7,10,6,2,0,255,12.5,0
+165,Consulta de tabela de preços vigentes (Lote #165),CRUD Simples,3,3,4,2,0,0,75,3.6,0
+166,Importação em lote de extratos bancários via OFX (Lote #166),Integração Pesada,5,3,15,7,7,1,257,16.9,1
+167,Visualização de detalhes de pedidos antigos (Lote #167),CRUD Simples,2,3,6,2,0,0,96,3.4,0
+168,Visualização de detalhes de pedidos antigos (Lote #168),CRUD Simples,2,3,6,2,0,0,63,5.5,0
+169,Exclusão lógica de fornecedores inativos (Lote #169),CRUD Simples,3,1,4,2,0,0,97,5.1,0
+170,Esteira de renegociação de dívidas parceladas (Lote #170),Fluxo Complexo,9,10,16,3,2,0,212,15.2,0
+171,Emissão de NF-e via SEFAZ com retry e fallback (Lote #171),Integração Pesada,3,6,11,8,3,0,123,8.6,0
+172,Cadastro rápido de tags de conteúdo (Lote #172),CRUD Simples,2,3,2,2,0,0,100,4.8,0
+173,Regras de elegibilidade para seguros corporativos (Lote #173),Fluxo Complexo,6,7,22,5,0,0,184,12.1,0
+174,Visualização de detalhes de pedidos antigos (Lote #174),CRUD Simples,4,1,6,2,1,0,129,6.3,0
+175,Cálculo de alíquotas fiscais interestaduais (Lote #175),Fluxo Complexo,13,5,13,3,1,0,257,14.5,0
+176,Exclusão lógica de fornecedores inativos (Lote #176),CRUD Simples,1,2,5,2,0,0,74,4.4,0
+177,Integração com transportadoras e cálculo de frete externo (Lote #177),Integração Pesada,4,3,11,7,3,0,226,9.9,0
+178,Motor de precificação dinâmica para alta demanda (Lote #178),Fluxo Complexo,11,11,11,5,2,1,298,18.0,1
+179,Autenticação multifator (MFA) via TOTP e SMS (Lote #179),Crítico / Segurança,8,5,12,7,1,1,290,12.9,1
+180,Edição de dados cadastrais do cliente (Lote #180),CRUD Simples,1,1,5,1,0,0,107,2.6,0
+181,Cadastro de categorias de produtos (Lote #181),CRUD Simples,1,1,6,2,0,0,78,3.7,1
+182,Consulta de tabela de preços vigentes (Lote #182),CRUD Simples,2,1,3,1,0,0,96,3.2,0
+183,Auditoria de transações sensíveis de administradores (Lote #183),Crítico / Segurança,9,7,15,11,3,1,297,15.2,0
+184,Anonimização e direito ao esquecimento LGPD (Lote #184),Crítico / Segurança,7,7,13,10,3,1,373,15.6,0
+185,Listagem com paginação de usuários (Lote #185),CRUD Simples,4,2,2,3,0,0,42,4.7,0
+186,Integração com transportadoras e cálculo de frete externo (Lote #186),Integração Pesada,6,5,14,6,4,0,170,12.1,1
+187,Integração com gateway bancário PIX e Boleto (Lote #187),Integração Pesada,6,3,9,8,7,0,256,14.8,1
+188,Aprovação multinível de adiantamento financeiro (Lote #188),Fluxo Complexo,9,10,21,4,2,0,258,15.6,0
+189,Cálculo de alíquotas fiscais interestaduais (Lote #189),Fluxo Complexo,6,11,17,7,2,0,371,13.8,0
+190,Exclusão lógica de fornecedores inativos (Lote #190),CRUD Simples,3,2,2,3,0,0,69,3.2,0
+191,Cadastro rápido de tags de conteúdo (Lote #191),CRUD Simples,3,3,4,1,0,0,64,4.4,0
+192,Criptografia de dados de cartão de crédito no cofre (Lote #192),Crítico / Segurança,8,7,16,9,2,1,293,14.9,1
+193,Proteção contra brute-force e rate limit em endpoints (Lote #193),Crítico / Segurança,7,7,16,10,2,1,290,15.3,1
+194,Fechamento contábil mensal com conciliação (Lote #194),Fluxo Complexo,13,6,23,3,0,0,183,14.2,0
+195,Cadastro de categorias de produtos (Lote #195),CRUD Simples,3,2,2,1,0,0,130,3.7,0
+196,Listagem com paginação de usuários (Lote #196),CRUD Simples,3,3,2,1,0,0,102,5.5,0
+197,Importação em lote de extratos bancários via OFX (Lote #197),Integração Pesada,7,5,14,8,7,1,261,18.2,1
+198,Renovação de tokens OAuth2 e revogação de sessões (Lote #198),Crítico / Segurança,8,5,10,6,2,1,410,13.4,1
+199,Auditoria de transações sensíveis de administradores (Lote #199),Crítico / Segurança,9,6,10,11,3,1,243,15.7,1
+200,Integração com transportadoras e cálculo de frete externo (Lote #200),Integração Pesada,3,5,8,6,4,1,147,11.3,0
+201,Fechamento contábil mensal com conciliação (Lote #201),Fluxo Complexo,8,11,13,7,0,0,358,11.5,0
+202,Edição de dados cadastrais do cliente (Lote #202),CRUD Simples,1,3,2,3,1,0,125,4.5,0
+203,Consulta de tabela de preços vigentes (Lote #203),CRUD Simples,4,3,4,2,1,0,108,5.7,0
+204,Auditoria de transações sensíveis de administradores (Lote #204),Crítico / Segurança,8,4,16,9,3,1,375,15.6,0
+205,Regras de elegibilidade para seguros corporativos (Lote #205),Fluxo Complexo,14,7,19,6,0,0,170,16.1,0
+206,Exclusão lógica de fornecedores inativos (Lote #206),CRUD Simples,3,3,5,2,0,1,105,7.2,0
+207,Cadastro rápido de tags de conteúdo (Lote #207),CRUD Simples,2,2,2,2,0,0,129,3.8,0
+208,Webhook assíncrono de notificações de pagamento (Lote #208),Integração Pesada,7,3,6,6,5,0,203,12.3,1
+209,Consulta de tabela de preços vigentes (Lote #209),CRUD Simples,1,2,4,1,0,0,88,3.0,0
+210,Cadastro de categorias de produtos (Lote #210),CRUD Simples,1,1,2,1,0,0,98,3.9,0
+211,Processamento de comissões de vendas por metas (Lote #211),Fluxo Complexo,8,7,22,7,0,0,168,12.9,0
+212,Integração com gateway bancário PIX e Boleto (Lote #212),Integração Pesada,7,6,6,8,4,1,127,15.0,1
+213,Integração com gateway bancário PIX e Boleto (Lote #213),Integração Pesada,4,4,7,7,3,0,201,9.6,0
+214,Cadastro de categorias de produtos (Lote #214),CRUD Simples,1,2,4,3,0,0,68,2.4,0
+215,Sincronização bidirecional com CRM Salesforce (Lote #215),Integração Pesada,4,5,11,4,3,0,122,9.4,0
+216,Consulta de tabela de preços vigentes (Lote #216),CRUD Simples,3,2,3,1,0,0,104,4.4,0
+217,Consulta de tabela de preços vigentes (Lote #217),CRUD Simples,1,3,2,3,0,0,60,2.8,0
+218,Importação em lote de extratos bancários via OFX (Lote #218),Integração Pesada,3,3,11,5,6,0,151,11.7,0
+219,Motor de precificação dinâmica para alta demanda (Lote #219),Fluxo Complexo,12,7,19,5,0,0,273,13.6,1
+220,Envio de mensagens transacionais via mensageria Kafka (Lote #220),Integração Pesada,6,3,13,4,3,1,138,13.0,0
+221,Emissão de NF-e via SEFAZ com retry e fallback (Lote #221),Integração Pesada,5,4,6,4,7,0,295,15.4,1
+222,Esteira de renegociação de dívidas parceladas (Lote #222),Fluxo Complexo,13,7,12,5,0,0,304,12.5,0
+223,Visualização de detalhes de pedidos antigos (Lote #223),CRUD Simples,3,1,3,1,0,0,74,4.2,0
+224,Cálculo de alíquotas fiscais interestaduais (Lote #224),Fluxo Complexo,9,5,22,6,0,0,198,11.0,0
+225,Cadastro rápido de tags de conteúdo (Lote #225),CRUD Simples,3,3,3,2,0,0,124,3.8,0
+226,Cadastro rápido de tags de conteúdo (Lote #226),CRUD Simples,4,3,2,3,0,0,137,3.2,0
+227,Renovação de tokens OAuth2 e revogação de sessões (Lote #227),Crítico / Segurança,5,4,15,7,3,1,324,13.3,0
+228,Esteira de renegociação de dívidas parceladas (Lote #228),Fluxo Complexo,9,10,12,5,0,0,203,13.4,1
+229,Criptografia de dados de cartão de crédito no cofre (Lote #229),Crítico / Segurança,7,8,8,9,1,1,205,13.1,1
+230,Fechamento contábil mensal com conciliação (Lote #230),Fluxo Complexo,11,11,16,4,1,0,339,15.5,1
+231,Webhook assíncrono de notificações de pagamento (Lote #231),Integração Pesada,5,4,6,6,7,1,201,17.3,1
+232,Motor de precificação dinâmica para alta demanda (Lote #232),Fluxo Complexo,8,11,18,6,0,0,262,12.5,0
+233,Processamento de comissões de vendas por metas (Lote #233),Fluxo Complexo,10,9,23,7,2,0,263,18.1,0
+234,Regras de elegibilidade para seguros corporativos (Lote #234),Fluxo Complexo,10,8,11,3,2,0,206,13.8,0
+235,Cadastro rápido de tags de conteúdo (Lote #235),CRUD Simples,1,1,6,1,0,0,105,3.3,0
+236,Integração com transportadoras e cálculo de frete externo (Lote #236),Integração Pesada,6,4,11,6,5,0,261,11.4,1
+237,Cadastro rápido de tags de conteúdo (Lote #237),CRUD Simples,2,2,5,2,0,0,52,3.0,0
+238,Edição de dados cadastrais do cliente (Lote #238),CRUD Simples,4,3,4,2,0,0,104,4.2,1
+239,Processamento de comissões de vendas por metas (Lote #239),Fluxo Complexo,10,7,18,3,1,0,332,11.6,0
+240,Consulta de tabela de preços vigentes (Lote #240),CRUD Simples,4,2,3,2,0,0,61,3.9,0
+241,Anonimização e direito ao esquecimento LGPD (Lote #241),Crítico / Segurança,7,5,9,7,3,1,234,13.5,1
+242,Autenticação multifator (MFA) via TOTP e SMS (Lote #242),Crítico / Segurança,5,8,17,7,2,1,368,14.3,1
+243,Autenticação multifator (MFA) via TOTP e SMS (Lote #243),Crítico / Segurança,6,6,16,8,2,1,259,12.5,0
+244,Processamento de comissões de vendas por metas (Lote #244),Fluxo Complexo,10,5,19,4,0,0,368,13.6,1
+245,Visualização de detalhes de pedidos antigos (Lote #245),CRUD Simples,1,3,6,1,1,0,56,5.2,0
+246,Renovação de tokens OAuth2 e revogação de sessões (Lote #246),Crítico / Segurança,6,6,12,7,1,1,260,10.6,0
+247,Processamento de comissões de vendas por metas (Lote #247),Fluxo Complexo,7,10,12,6,0,0,162,12.3,0
+248,Autenticação multifator (MFA) via TOTP e SMS (Lote #248),Crítico / Segurança,4,6,13,11,1,1,259,12.7,0
+249,Proteção contra brute-force e rate limit em endpoints (Lote #249),Crítico / Segurança,7,5,10,9,2,1,308,13.4,1
+250,Auditoria de transações sensíveis de administradores (Lote #250),Crítico / Segurança,7,6,10,10,1,1,208,12.8,0
+251,Visualização de detalhes de pedidos antigos (Lote #251),CRUD Simples,2,2,6,1,1,0,120,5.1,0
+252,Motor de precificação dinâmica para alta demanda (Lote #252),Fluxo Complexo,11,5,21,6,0,0,377,13.9,0
+253,Proteção contra brute-force e rate limit em endpoints (Lote #253),Crítico / Segurança,7,4,15,9,2,1,340,14.1,0
+254,Visualização de detalhes de pedidos antigos (Lote #254),CRUD Simples,2,3,6,1,0,0,96,5.6,0
+255,Cadastro rápido de tags de conteúdo (Lote #255),CRUD Simples,3,1,4,1,0,0,84,2.8,0
+256,Cálculo de alíquotas fiscais interestaduais (Lote #256),Fluxo Complexo,7,6,21,7,2,0,321,13.6,0
+257,Renovação de tokens OAuth2 e revogação de sessões (Lote #257),Crítico / Segurança,9,4,8,8,2,1,358,14.7,0
+258,Envio de mensagens transacionais via mensageria Kafka (Lote #258),Integração Pesada,5,5,10,7,6,1,184,16.0,1
+259,Fechamento contábil mensal com conciliação (Lote #259),Fluxo Complexo,14,11,18,4,1,0,154,15.7,1
+260,Cadastro de categorias de produtos (Lote #260),CRUD Simples,2,2,4,2,0,0,60,4.0,0
+261,Regras de elegibilidade para seguros corporativos (Lote #261),Fluxo Complexo,7,10,19,7,2,0,371,14.9,0
+262,Renovação de tokens OAuth2 e revogação de sessões (Lote #262),Crítico / Segurança,4,4,9,8,3,1,315,11.8,0
+263,Exclusão lógica de fornecedores inativos (Lote #263),CRUD Simples,4,3,3,2,0,0,128,4.8,0
+264,Processamento de comissões de vendas por metas (Lote #264),Fluxo Complexo,10,6,11,7,1,0,245,11.6,0
+265,Autenticação multifator (MFA) via TOTP e SMS (Lote #265),Crítico / Segurança,6,7,15,7,2,1,252,14.1,1
+266,Envio de mensagens transacionais via mensageria Kafka (Lote #266),Integração Pesada,6,6,15,6,7,0,223,16.3,1
+267,Envio de mensagens transacionais via mensageria Kafka (Lote #267),Integração Pesada,5,3,8,7,7,0,128,12.8,1
+268,Importação em lote de extratos bancários via OFX (Lote #268),Integração Pesada,3,5,9,7,7,0,218,13.1,1
+269,Aprovação multinível de adiantamento financeiro (Lote #269),Fluxo Complexo,9,9,13,7,2,0,342,14.0,0
+270,Exclusão lógica de fornecedores inativos (Lote #270),CRUD Simples,3,2,4,3,0,0,104,4.9,0
+271,Envio de mensagens transacionais via mensageria Kafka (Lote #271),Integração Pesada,6,3,13,6,7,0,145,14.0,1
+272,Importação em lote de extratos bancários via OFX (Lote #272),Integração Pesada,4,6,10,8,6,1,203,14.0,1
+273,Autenticação multifator (MFA) via TOTP e SMS (Lote #273),Crítico / Segurança,6,7,16,8,2,1,354,14.4,0
+274,Anonimização e direito ao esquecimento LGPD (Lote #274),Crítico / Segurança,4,4,14,10,3,1,228,13.6,0
+275,Esteira de renegociação de dívidas parceladas (Lote #275),Fluxo Complexo,14,8,15,7,0,1,284,18.5,1
+276,Fechamento contábil mensal com conciliação (Lote #276),Fluxo Complexo,11,7,13,3,0,0,207,11.7,0
+277,Emissão de NF-e via SEFAZ com retry e fallback (Lote #277),Integração Pesada,5,4,14,6,6,1,141,16.8,0
+278,Processamento de comissões de vendas por metas (Lote #278),Fluxo Complexo,12,11,19,4,2,0,158,17.7,0
+279,Webhook assíncrono de notificações de pagamento (Lote #279),Integração Pesada,6,6,9,4,5,1,221,16.1,1
+280,Webhook assíncrono de notificações de pagamento (Lote #280),Integração Pesada,3,5,13,5,5,1,270,14.2,1
+281,Autenticação multifator (MFA) via TOTP e SMS (Lote #281),Crítico / Segurança,8,7,11,10,3,1,222,16.2,1
+282,Cadastro de categorias de produtos (Lote #282),CRUD Simples,1,3,3,3,0,0,107,3.5,0
+283,Regras de elegibilidade para seguros corporativos (Lote #283),Fluxo Complexo,6,10,11,7,2,0,208,14.1,0
+284,Edição de dados cadastrais do cliente (Lote #284),CRUD Simples,1,1,6,3,0,0,103,3.9,0
+285,Motor de precificação dinâmica para alta demanda (Lote #285),Fluxo Complexo,9,8,16,4,1,0,378,13.9,0
+286,Listagem com paginação de usuários (Lote #286),CRUD Simples,4,3,4,3,0,0,136,4.1,0
+287,Processamento de comissões de vendas por metas (Lote #287),Fluxo Complexo,6,10,10,7,0,1,218,12.3,0
+288,Esteira de renegociação de dívidas parceladas (Lote #288),Fluxo Complexo,7,10,16,6,0,0,331,12.1,0
+289,Consulta de tabela de preços vigentes (Lote #289),CRUD Simples,1,1,3,3,0,1,129,5.8,1
+290,Aprovação multinível de adiantamento financeiro (Lote #290),Fluxo Complexo,10,8,23,3,0,0,361,13.1,0
+291,Edição de dados cadastrais do cliente (Lote #291),CRUD Simples,3,2,3,1,0,0,63,4.5,0
+292,Cadastro rápido de tags de conteúdo (Lote #292),CRUD Simples,3,1,5,3,0,0,58,5.6,0
+293,Sincronização bidirecional com CRM Salesforce (Lote #293),Integração Pesada,5,4,15,4,3,1,189,12.3,0
+294,Esteira de renegociação de dívidas parceladas (Lote #294),Fluxo Complexo,9,5,12,4,0,0,228,9.5,1
+295,Cadastro de categorias de produtos (Lote #295),CRUD Simples,1,1,5,3,0,0,40,3.7,0
+296,Regras de elegibilidade para seguros corporativos (Lote #296),Fluxo Complexo,11,5,19,4,2,0,312,15.4,0
+297,Emissão de NF-e via SEFAZ com retry e fallback (Lote #297),Integração Pesada,3,5,15,6,6,1,240,16.4,1
+298,Cadastro rápido de tags de conteúdo (Lote #298),CRUD Simples,1,1,5,3,0,0,108,2.5,0
+299,Cálculo de alíquotas fiscais interestaduais (Lote #299),Fluxo Complexo,7,10,16,4,1,1,168,13.2,0
+300,Edição de dados cadastrais do cliente (Lote #300),CRUD Simples,2,2,2,3,0,0,90,3.4,0
+301,Edição de dados cadastrais do cliente (Lote #301),CRUD Simples,1,3,2,1,1,0,95,4.0,0
+302,Processamento de comissões de vendas por metas (Lote #302),Fluxo Complexo,11,6,17,6,1,0,186,13.3,0
+303,Processamento de comissões de vendas por metas (Lote #303),Fluxo Complexo,14,9,13,7,2,0,217,16.2,0
+304,Regras de elegibilidade para seguros corporativos (Lote #304),Fluxo Complexo,7,5,10,7,0,0,351,10.8,0
+305,Integração com gateway bancário PIX e Boleto (Lote #305),Integração Pesada,7,3,9,7,6,0,142,14.0,1
+306,Autenticação multifator (MFA) via TOTP e SMS (Lote #306),Crítico / Segurança,8,8,11,11,2,1,336,16.3,0
+307,Esteira de renegociação de dívidas parceladas (Lote #307),Fluxo Complexo,14,10,12,7,2,0,318,17.9,0
+308,Cadastro rápido de tags de conteúdo (Lote #308),CRUD Simples,4,3,2,3,0,0,76,6.6,0
+309,Importação em lote de extratos bancários via OFX (Lote #309),Integração Pesada,7,3,12,8,4,0,227,11.3,1
+310,Cadastro de categorias de produtos (Lote #310),CRUD Simples,2,3,3,3,0,0,75,3.9,0
+311,Motor de precificação dinâmica para alta demanda (Lote #311),Fluxo Complexo,12,11,15,5,1,0,305,16.5,0
+312,Cadastro de categorias de produtos (Lote #312),CRUD Simples,2,1,4,3,0,0,104,3.2,0
+313,Cadastro de categorias de produtos (Lote #313),CRUD Simples,2,1,6,1,0,0,78,4.3,0
+314,Auditoria de transações sensíveis de administradores (Lote #314),Crítico / Segurança,5,4,10,7,1,1,262,10.9,0
+315,Webhook assíncrono de notificações de pagamento (Lote #315),Integração Pesada,5,3,8,8,7,0,145,13.1,0
+316,Webhook assíncrono de notificações de pagamento (Lote #316),Integração Pesada,3,5,8,4,7,0,288,13.1,1
+317,Regras de elegibilidade para seguros corporativos (Lote #317),Fluxo Complexo,14,6,12,4,1,0,334,15.9,1
+318,Cadastro de categorias de produtos (Lote #318),CRUD Simples,1,2,3,1,0,0,103,2.7,0
+319,Edição de dados cadastrais do cliente (Lote #319),CRUD Simples,3,2,5,3,0,0,134,5.6,0
+320,Exclusão lógica de fornecedores inativos (Lote #320),CRUD Simples,3,2,6,3,0,0,112,6.3,0
+321,Motor de precificação dinâmica para alta demanda (Lote #321),Fluxo Complexo,9,5,12,7,2,0,178,13.7,0
+322,Integração com transportadoras e cálculo de frete externo (Lote #322),Integração Pesada,7,4,6,6,7,1,155,16.4,1
+323,Integração com gateway bancário PIX e Boleto (Lote #323),Integração Pesada,4,3,11,6,3,0,249,10.7,0
+324,Cadastro rápido de tags de conteúdo (Lote #324),CRUD Simples,4,1,3,2,0,0,62,5.5,0
+325,Recuperação de senha com link temporal assinado (Lote #325),Crítico / Segurança,4,6,13,8,2,1,220,11.4,0
+326,Sincronização bidirecional com CRM Salesforce (Lote #326),Integração Pesada,7,5,9,5,7,1,251,17.9,1
+327,Aprovação multinível de adiantamento financeiro (Lote #327),Fluxo Complexo,10,8,21,3,0,0,171,13.8,1
+328,Aprovação multinível de adiantamento financeiro (Lote #328),Fluxo Complexo,11,5,17,5,2,1,253,16.1,0
+329,Cálculo de alíquotas fiscais interestaduais (Lote #329),Fluxo Complexo,11,9,15,5,2,1,240,18.1,0
+330,Edição de dados cadastrais do cliente (Lote #330),CRUD Simples,3,3,6,1,0,0,98,5.0,1
+331,Fechamento contábil mensal com conciliação (Lote #331),Fluxo Complexo,10,7,15,4,0,0,309,13.0,1
+332,Emissão de NF-e via SEFAZ com retry e fallback (Lote #332),Integração Pesada,7,3,15,6,3,0,148,11.3,0
+333,Edição de dados cadastrais do cliente (Lote #333),CRUD Simples,1,3,4,2,0,0,102,4.5,0
+334,Edição de dados cadastrais do cliente (Lote #334),CRUD Simples,4,3,6,2,0,0,126,6.2,1
+335,Edição de dados cadastrais do cliente (Lote #335),CRUD Simples,3,1,2,2,0,0,103,3.7,0
+336,Consulta de tabela de preços vigentes (Lote #336),CRUD Simples,2,2,2,1,1,0,89,5.1,0
+337,Renovação de tokens OAuth2 e revogação de sessões (Lote #337),Crítico / Segurança,9,7,13,8,2,1,253,15.9,0
+338,Sincronização bidirecional com CRM Salesforce (Lote #338),Integração Pesada,6,4,15,6,6,0,269,14.3,1
+339,Cálculo de alíquotas fiscais interestaduais (Lote #339),Fluxo Complexo,9,8,16,5,2,0,336,14.6,0
+340,Cadastro rápido de tags de conteúdo (Lote #340),CRUD Simples,1,3,4,1,1,0,96,5.8,1
+341,Fechamento contábil mensal com conciliação (Lote #341),Fluxo Complexo,12,9,16,6,0,0,191,13.7,0
+342,Aprovação multinível de adiantamento financeiro (Lote #342),Fluxo Complexo,9,6,15,4,2,0,280,13.2,0
+343,Visualização de detalhes de pedidos antigos (Lote #343),CRUD Simples,2,2,5,1,0,0,75,4.7,0
+344,Regras de elegibilidade para seguros corporativos (Lote #344),Fluxo Complexo,13,11,17,4,2,0,369,17.3,1
+345,Aprovação multinível de adiantamento financeiro (Lote #345),Fluxo Complexo,13,10,17,5,1,1,214,16.8,0
+346,Aprovação multinível de adiantamento financeiro (Lote #346),Fluxo Complexo,10,6,18,7,0,0,264,13.0,0
+347,Fechamento contábil mensal com conciliação (Lote #347),Fluxo Complexo,10,6,22,3,2,0,187,14.4,0
+348,Listagem com paginação de usuários (Lote #348),CRUD Simples,4,3,5,3,0,0,52,7.0,0
+349,Regras de elegibilidade para seguros corporativos (Lote #349),Fluxo Complexo,11,8,21,3,0,0,379,15.3,0
+350,Regras de elegibilidade para seguros corporativos (Lote #350),Fluxo Complexo,7,10,22,3,1,0,248,15.1,0
+351,Esteira de renegociação de dívidas parceladas (Lote #351),Fluxo Complexo,9,5,18,7,1,0,276,13.1,0
+352,Auditoria de transações sensíveis de administradores (Lote #352),Crítico / Segurança,4,7,8,6,3,1,217,13.0,0
+353,Importação em lote de extratos bancários via OFX (Lote #353),Integração Pesada,5,3,12,8,3,1,135,13.5,0
+354,Consulta de tabela de preços vigentes (Lote #354),CRUD Simples,3,1,3,1,0,0,82,4.2,0
+355,Cadastro de categorias de produtos (Lote #355),CRUD Simples,4,2,5,3,0,0,69,3.3,0
+356,Cálculo de alíquotas fiscais interestaduais (Lote #356),Fluxo Complexo,8,7,11,3,2,0,355,13.4,0
+357,Listagem com paginação de usuários (Lote #357),CRUD Simples,2,3,4,3,0,0,71,5.3,0
+358,Regras de elegibilidade para seguros corporativos (Lote #358),Fluxo Complexo,11,6,15,7,0,1,203,14.6,0
+359,Autenticação multifator (MFA) via TOTP e SMS (Lote #359),Crítico / Segurança,8,6,9,8,3,1,315,16.9,1
+360,Fechamento contábil mensal com conciliação (Lote #360),Fluxo Complexo,7,10,16,7,2,0,363,13.6,0
+361,Fechamento contábil mensal com conciliação (Lote #361),Fluxo Complexo,6,5,13,6,1,0,248,9.9,0
+362,Aprovação multinível de adiantamento financeiro (Lote #362),Fluxo Complexo,7,5,21,4,1,0,286,12.9,0
+363,Motor de precificação dinâmica para alta demanda (Lote #363),Fluxo Complexo,14,11,11,5,1,0,267,17.7,0
+364,Aprovação multinível de adiantamento financeiro (Lote #364),Fluxo Complexo,8,7,17,7,2,0,357,13.9,0
+365,Renovação de tokens OAuth2 e revogação de sessões (Lote #365),Crítico / Segurança,5,5,14,7,3,1,291,15.0,1
+366,Cálculo de alíquotas fiscais interestaduais (Lote #366),Fluxo Complexo,7,10,12,4,0,0,326,11.6,0
+367,Renovação de tokens OAuth2 e revogação de sessões (Lote #367),Crítico / Segurança,9,8,17,7,2,1,184,17.1,1
+368,Proteção contra brute-force e rate limit em endpoints (Lote #368),Crítico / Segurança,7,6,9,10,3,1,373,16.8,1
+369,Listagem com paginação de usuários (Lote #369),CRUD Simples,1,1,4,1,0,0,92,2.2,0
+370,Visualização de detalhes de pedidos antigos (Lote #370),CRUD Simples,1,1,4,2,0,0,69,2.7,0
+371,Visualização de detalhes de pedidos antigos (Lote #371),CRUD Simples,3,3,6,1,0,1,112,7.0,1
+372,Cadastro de categorias de produtos (Lote #372),CRUD Simples,4,1,6,3,0,0,93,5.4,0
+373,Edição de dados cadastrais do cliente (Lote #373),CRUD Simples,1,2,2,1,0,0,77,1.8,0
+374,Integração com transportadoras e cálculo de frete externo (Lote #374),Integração Pesada,7,5,11,8,5,1,278,16.7,1
+375,Consulta de tabela de preços vigentes (Lote #375),CRUD Simples,2,1,2,2,0,0,59,3.9,0
+376,Exclusão lógica de fornecedores inativos (Lote #376),CRUD Simples,1,1,6,3,0,0,58,4.2,0
+377,Emissão de NF-e via SEFAZ com retry e fallback (Lote #377),Integração Pesada,4,6,13,8,7,0,226,14.5,0
+378,Consulta de tabela de preços vigentes (Lote #378),CRUD Simples,2,2,6,3,0,0,98,4.0,0
+379,Sincronização bidirecional com CRM Salesforce (Lote #379),Integração Pesada,5,4,13,6,3,0,127,10.4,0
+380,Visualização de detalhes de pedidos antigos (Lote #380),CRUD Simples,1,3,3,2,0,0,132,2.9,0
+381,Cadastro rápido de tags de conteúdo (Lote #381),CRUD Simples,1,2,3,1,0,0,62,1.0,0
+382,Sincronização bidirecional com CRM Salesforce (Lote #382),Integração Pesada,3,3,15,7,5,0,225,11.4,0
+383,Esteira de renegociação de dívidas parceladas (Lote #383),Fluxo Complexo,11,10,12,3,1,0,160,15.5,0
+384,Renovação de tokens OAuth2 e revogação de sessões (Lote #384),Crítico / Segurança,9,4,9,6,3,1,392,15.4,1
+385,Importação em lote de extratos bancários via OFX (Lote #385),Integração Pesada,3,6,7,8,3,1,177,12.6,1
+386,Emissão de NF-e via SEFAZ com retry e fallback (Lote #386),Integração Pesada,6,6,7,5,5,0,204,12.6,0
+387,Exclusão lógica de fornecedores inativos (Lote #387),CRUD Simples,1,2,3,2,0,0,57,3.6,0
+388,Cadastro de categorias de produtos (Lote #388),CRUD Simples,4,3,3,1,0,0,129,6.4,0
+389,Importação em lote de extratos bancários via OFX (Lote #389),Integração Pesada,6,6,6,8,3,0,127,8.9,0
+390,Integração com transportadoras e cálculo de frete externo (Lote #390),Integração Pesada,4,5,9,7,7,0,262,14.4,1
+391,Anonimização e direito ao esquecimento LGPD (Lote #391),Crítico / Segurança,8,8,14,9,1,1,307,14.3,1
+392,Aprovação multinível de adiantamento financeiro (Lote #392),Fluxo Complexo,10,10,13,7,2,0,290,14.1,0
+393,Cálculo de alíquotas fiscais interestaduais (Lote #393),Fluxo Complexo,12,7,12,6,2,0,297,16.1,1
+394,Integração com gateway bancário PIX e Boleto (Lote #394),Integração Pesada,5,3,11,5,6,0,153,12.5,0
+395,Exclusão lógica de fornecedores inativos (Lote #395),CRUD Simples,3,2,4,1,0,0,134,6.9,0
+396,Anonimização e direito ao esquecimento LGPD (Lote #396),Crítico / Segurança,5,7,15,6,2,1,404,13.1,1
+397,Auditoria de transações sensíveis de administradores (Lote #397),Crítico / Segurança,7,5,9,9,3,1,368,13.9,0
+398,Aprovação multinível de adiantamento financeiro (Lote #398),Fluxo Complexo,13,8,21,5,1,0,199,17.0,1
+399,Sincronização bidirecional com CRM Salesforce (Lote #399),Integração Pesada,5,3,11,5,3,1,179,12.9,1
+400,Webhook assíncrono de notificações de pagamento (Lote #400),Integração Pesada,4,5,10,8,3,1,226,12.9,0

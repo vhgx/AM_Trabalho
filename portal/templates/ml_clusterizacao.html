@@ -1,177 +1,191 @@
 {% extends "base.html" %}
 
-{% block title %}Clusterização — Agrupar Requisitos - QA Gen Portal{% endblock %}
+{% block title %}Clusterização — Perfil de Requisitos - QA Gen Insights{% endblock %}
 
 {% block content %}
 <div class="row">
-    <div class="col-md-12">
-        <h1 class="mb-2">🔬 Clusterização — Agrupar Requisitos Similares</h1>
-        <p class="text-muted mb-4">
-            O modelo <strong>KMeans</strong> agrupa os requisitos em clusters com base em features 
-            numéricas extraídas automaticamente, sem rótulos prévios (Aprendizado Não Supervisionado).
+    <div class="col-md-12 mb-3">
+        <h1 class="mb-1">🔬 Laboratório de Clusterização: Descoberta de Perfis de Requisitos</h1>
+        <p class="text-muted">
+            Aprendizado não supervisionado via <strong>K-Means</strong> sobre atributos padronizados (StandardScaler).
+            O agrupamento autônomo identifica 4 arquétipos operacionais, auditados pelo <strong>Método do Cotovelo</strong> e <strong>Coeficiente de Silhueta</strong>, e projetados no espaço visual 2D via <strong>PCA (Análise de Componentes Principais)</strong>.
         </p>
     </div>
 </div>
 
-<!-- Configuração -->
-<div class="row mb-4">
-    <div class="col-md-4">
-        <div class="card shadow-sm">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">⚙️ Configuração</h5>
+<div class="row g-4">
+    <!-- Formulário / Seleção de Requisito -->
+    <div class="col-lg-5">
+        <div class="card shadow-sm border-{{ resultado.cor }}">
+            <div class="card-header bg-{{ resultado.cor }} text-white">
+                <h5 class="mb-0">⚙️ Atributos do Requisito Sob Teste</h5>
             </div>
             <div class="card-body">
+                {% if requisitos_db %}
+                <form method="POST" class="mb-4 pb-3 border-bottom">
+                    {% csrf_token %}
+                    <label for="requisito_id" class="form-label"><strong>Carregar Requisito Real do Banco:</strong></label>
+                    <div class="input-group">
+                        <select class="form-select" id="requisito_id" name="requisito_id">
+                            <option value="">-- Selecione para extrair features via IA --</option>
+                            {% for req in requisitos_db %}
+                                <option value="{{ req.pk }}" {% if req.pk == req_selecionado_id %}selected{% endif %}>
+                                    #{{ req.pk }} - {{ req.titulo }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-outline-secondary" type="submit">Carregar</button>
+                    </div>
+                </form>
+                {% endif %}
+
                 <form method="POST">
                     {% csrf_token %}
+                    
                     <div class="mb-3">
-                        <label for="n_clusters" class="form-label">
-                            <strong>Número de Clusters</strong>
+                        <label for="num_regras_negocio" class="form-label d-flex justify-content-between">
+                            <span><strong>Regras de Negócio:</strong></span>
+                            <span class="badge bg-primary" id="val_regras">{{ inputs.num_regras_negocio }}</span>
                         </label>
-                        <input type="number" class="form-control" id="n_clusters" name="n_clusters" 
-                               min="2" max="10" value="{{ n_clusters }}">
-                        <div class="form-text">Mínimo: 2, Máximo: 10</div>
+                        <input type="range" class="form-range" id="num_regras_negocio" name="num_regras_negocio" 
+                               min="1" max="15" value="{{ inputs.num_regras_negocio }}"
+                               oninput="document.getElementById('val_regras').textContent = this.value">
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">
-                        🔄 Executar Clusterização
+
+                    <div class="mb-3">
+                        <label for="num_cenarios_bdd" class="form-label d-flex justify-content-between">
+                            <span><strong>Cenários BDD (Gherkin):</strong></span>
+                            <span class="badge bg-secondary" id="val_cenarios">{{ inputs.num_cenarios_bdd }}</span>
+                        </label>
+                        <input type="range" class="form-range" id="num_cenarios_bdd" name="num_cenarios_bdd" 
+                               min="1" max="12" value="{{ inputs.num_cenarios_bdd }}"
+                               oninput="document.getElementById('val_cenarios').textContent = this.value">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="num_casos_teste" class="form-label d-flex justify-content-between">
+                            <span><strong>Casos de Teste Estruturados:</strong></span>
+                            <span class="badge bg-secondary" id="val_casos">{{ inputs.num_casos_teste }}</span>
+                        </label>
+                        <input type="range" class="form-range" id="num_casos_teste" name="num_casos_teste" 
+                               min="2" max="25" value="{{ inputs.num_casos_teste }}"
+                               oninput="document.getElementById('val_casos').textContent = this.value">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="num_edge_cases" class="form-label d-flex justify-content-between">
+                            <span><strong>Edge Cases & Testes Extremos:</strong></span>
+                            <span class="badge bg-secondary" id="val_edge">{{ inputs.num_edge_cases }}</span>
+                        </label>
+                        <input type="range" class="form-range" id="num_edge_cases" name="num_edge_cases" 
+                               min="1" max="10" value="{{ inputs.num_edge_cases }}"
+                               oninput="document.getElementById('val_edge').textContent = this.value">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="num_integracoes" class="form-label d-flex justify-content-between">
+                            <span><strong>Integrações Externas:</strong></span>
+                            <span class="badge bg-warning text-dark" id="val_integracoes">{{ inputs.num_integracoes }}</span>
+                        </label>
+                        <input type="range" class="form-range" id="num_integracoes" name="num_integracoes" 
+                               min="0" max="8" value="{{ inputs.num_integracoes }}"
+                               oninput="document.getElementById('val_integracoes').textContent = this.value">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="envolve_seguranca" class="form-label"><strong>Envolve Segurança / Autenticação?</strong></label>
+                        <select class="form-select" id="envolve_seguranca" name="envolve_seguranca">
+                            <option value="0" {% if inputs.envolve_seguranca == 0 %}selected{% endif %}>Não (Fluxo Padrão)</option>
+                            <option value="1" {% if inputs.envolve_seguranca == 1 %}selected{% endif %}>Sim (Autenticação, Tokens, LGPD, Pagamentos)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="tamanho_descricao" class="form-label"><strong>Extensão da Descrição</strong> <small class="text-muted">(palavras)</small></label>
+                        <input type="number" class="form-control" id="tamanho_descricao" name="tamanho_descricao" 
+                               min="20" max="600" value="{{ inputs.tamanho_descricao }}">
+                    </div>
+
+                    <button type="submit" class="btn btn-{{ resultado.cor }} w-100 py-2 fw-bold text-white">
+                        ⚡ Localizar Perfil no Espaço Latente
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="col-md-8">
-        {% if fonte_dados == 'sintetico' %}
-        <div class="alert alert-warning">
-            <strong>⚠️ Dados Sintéticos:</strong> O banco de dados possui menos de 5 requisitos cadastrados. 
-            A clusterização está sendo executada com dados sintéticos gerados automaticamente para demonstração.
-            Cadastre mais requisitos pelo <a href="{% url 'submeter' %}">formulário de submissão</a> para usar dados reais.
-        </div>
-        {% elif fonte_dados == 'banco' %}
-        <div class="alert alert-success">
-            <strong>✅ Dados Reais:</strong> A clusterização está utilizando os requisitos cadastrados no banco de dados.
-        </div>
-        {% endif %}
-
-        {% if resultado %}
-        <!-- Métricas -->
-        <div class="card shadow-sm">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">📊 Métricas do KMeans</h5>
+    <!-- Resultados e Visualização PCA 2D -->
+    <div class="col-lg-7">
+        <!-- Card de Perfil Atribuído -->
+        <div class="card shadow-sm border-{{ resultado.cor }} mb-4 text-center">
+            <div class="card-header bg-{{ resultado.cor }} text-white">
+                <h5 class="mb-0">🎯 Cluster & Perfil de Requisito Identificado</h5>
             </div>
-            <div class="card-body">
-                <div class="row text-center">
-                    <div class="col-md-4">
-                        <h4 class="text-primary">{{ resultado.n_clusters }}</h4>
-                        <small class="text-muted">Clusters</small>
-                    </div>
-                    <div class="col-md-4">
-                        <h4 class="text-warning">{{ resultado.inercia }}</h4>
-                        <small class="text-muted">Inércia</small>
-                    </div>
-                    <div class="col-md-4">
-                        {% if resultado.silhouette %}
-                        <h4 class="text-success">{{ resultado.silhouette }}</h4>
-                        {% else %}
-                        <h4 class="text-muted">N/A</h4>
-                        {% endif %}
-                        <small class="text-muted">Silhouette Score</small>
-                    </div>
+            <div class="card-body py-4">
+                <span class="text-muted text-uppercase fw-bold small">Classificação Não Supervisionada</span>
+                <div class="display-5 fw-bold text-{{ resultado.cor }} my-2">
+                    {{ resultado.nome }}
+                </div>
+                <p class="text-muted mb-2">
+                    {{ resultado.descricao }}
+                </p>
+                <div class="badge bg-light text-dark border p-2">
+                    Coordenadas na Projeção PCA 2D: <strong>CP1 = {{ resultado.coord_pca_2d.0 }}</strong>, <strong>CP2 = {{ resultado.coord_pca_2d.1 }}</strong>
                 </div>
             </div>
         </div>
-        {% endif %}
-    </div>
-</div>
 
-{% if resultado %}
-<!-- Tabela de Resultados -->
-<div class="row">
-    <div class="col-md-12">
+        <!-- Gráfico PCA 2D -->
+        {% if grafico %}
         <div class="card shadow-sm mb-4">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0">✅ Requisitos Agrupados ({{ resultado.resultados|length }} itens)</h5>
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">🗺️ Mapa de Dispersão PCA 2D</h6>
+                <span class="badge bg-light text-dark">Variância Explicada: {{ metricas.variancia_total_retida|floatformat:2 }}</span>
             </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Requisito</th>
-                            <th>Cluster</th>
-                            <th>Tam. Descrição</th>
-                            <th>Nº Palavras</th>
-                            <th>Processado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for item in resultado.resultados %}
-                        <tr>
-                            <td><strong>{{ item.titulo }}</strong></td>
-                            <td>
-                                <span class="badge bg-{{ item.cor }}">
-                                    Cluster {{ item.cluster }}
-                                </span>
-                            </td>
-                            <td>{{ item.features.tamanho_descricao }}</td>
-                            <td>{{ item.features.num_palavras }}</td>
-                            <td>
-                                {% if item.features.processado %}
-                                <span class="badge bg-success">Sim</span>
-                                {% else %}
-                                <span class="badge bg-warning text-dark">Não</span>
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="card-body text-center p-3">
+                <img src="data:image/png;base64,{{ grafico }}" alt="Projeção PCA 2D dos Clusters" class="img-fluid rounded border">
+            </div>
+            <div class="card-footer bg-light small text-muted">
+                <em>A estrela rosa (★) indica a posição projetada do requisito sob análise. Os 'X' pretos demarcam os centróides aprendidos pelo algoritmo K-Means.</em>
             </div>
         </div>
-    </div>
-</div>
+        {% endif %}
 
-<!-- Centróides -->
-<div class="row">
-    <div class="col-md-12">
+        <!-- Auditoria de Agrupamento: Cotovelo & Silhueta -->
         <div class="card shadow-sm">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">📍 Centróides dos Clusters</h5>
+            <div class="card-header bg-secondary text-white">
+                <h6 class="mb-0">📐 Diagnóstico de Agrupamento (Método do Cotovelo & Silhueta)</h6>
             </div>
-            <div class="card-body">
-                <table class="table table-sm table-bordered">
-                    <thead class="table-dark">
+            <div class="card-body p-0">
+                <table class="table table-sm table-bordered table-striped mb-0 text-center">
+                    <thead class="table-light">
                         <tr>
-                            <th>Cluster</th>
-                            <th>Tam. Descrição</th>
-                            <th>Nº Palavras</th>
-                            <th>Tem Interpretação</th>
-                            <th>Tem BDD</th>
-                            <th>Tem Playwright</th>
-                            <th>Tem Edge Cases</th>
-                            <th>Processado</th>
+                            <th>K (Clusters)</th>
+                            {% for k in metricas.cotovelo_k %}
+                                <th {% if k == metricas.k_otimo %}class="table-warning fw-bold"{% endif %}>K={{ k }}</th>
+                            {% endfor %}
                         </tr>
                     </thead>
                     <tbody>
-                        {% for centroide in resultado.centroides %}
                         <tr>
-                            <td><span class="badge bg-dark">Cluster {{ centroide.cluster }}</span></td>
-                            <td>{{ centroide.valores.tamanho_descricao }}</td>
-                            <td>{{ centroide.valores.num_palavras }}</td>
-                            <td>{{ centroide.valores.tem_interpretacao }}</td>
-                            <td>{{ centroide.valores.tem_bdd }}</td>
-                            <td>{{ centroide.valores.tem_playwright }}</td>
-                            <td>{{ centroide.valores.tem_edge_cases }}</td>
-                            <td>{{ centroide.valores.processado }}</td>
+                            <td class="fw-bold text-start ps-2">Inércia (WCSS)</td>
+                            {% for inc in metricas.cotovelo_inercia %}
+                                <td>{{ inc }}</td>
+                            {% endfor %}
                         </tr>
-                        {% endfor %}
+                        <tr>
+                            <td class="fw-bold text-start ps-2">Silhueta</td>
+                            {% for sil in metricas.silhueta_scores %}
+                                <td {% if forloop.counter == 3 %}class="table-success fw-bold"{% endif %}>{{ sil }}</td>
+                            {% endfor %}
+                        </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="card-footer bg-light small text-muted">
+                <em>O K ótimo = {{ metricas.k_otimo }} equilibra a queda brusca da inércia intra-cluster com alto Coeficiente de Silhueta ({{ metricas.silhouette }}).</em>
             </div>
         </div>
     </div>
 </div>
-{% elif erro %}
-<div class="alert alert-danger">
-    <strong>❌ Erro:</strong> {{ erro }}
-</div>
-{% endif %}
 {% endblock %}

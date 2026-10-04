@@ -1,0 +1,158 @@
+{
+  "regressao": {
+    "linear": {
+      "r2": 0.9677,
+      "mae": 0.7181,
+      "rmse": 0.9018,
+      "coeficientes": {
+        "num_regras_negocio": 2.0008,
+        "num_cenarios_bdd": 1.085,
+        "num_casos_teste": 0.8222,
+        "num_edge_cases": -0.0469,
+        "num_integracoes": 1.9107,
+        "envolve_seguranca": 1.0293,
+        "tamanho_descricao": 0.3563
+      },
+      "intercept": 10.5685
+    },
+    "rf": {
+      "r2": 0.9357,
+      "mae": 1.0042,
+      "rmse": 1.2699,
+      "importancias": {
+        "num_regras_negocio": 0.0418,
+        "num_cenarios_bdd": 0.0187,
+        "num_casos_teste": 0.4518,
+        "num_edge_cases": 0.0191,
+        "num_integracoes": 0.0524,
+        "envolve_seguranca": 0.0199,
+        "tamanho_descricao": 0.3963
+      }
+    },
+    "modelo_escolhido": "RandomForestRegressor"
+  },
+  "classificacao": {
+    "logistica": {
+      "accuracy": 0.7675,
+      "precision": 0.6162,
+      "recall": 0.3771,
+      "f1": 0.4605,
+      "roc_auc": 0.7751,
+      "matriz_confusao": [
+        [
+          276,
+          18
+        ],
+        [
+          60,
+          46
+        ]
+      ]
+    },
+    "arvore": {
+      "accuracy": 0.77,
+      "precision": 0.6389,
+      "recall": 0.3117,
+      "f1": 0.4143,
+      "roc_auc": 0.7272
+    },
+    "taxa_positivos": 0.265,
+    "limiar_padrao": 0.35,
+    "modelo_escolhido": "Regressão Logística (com limiar calibrado)"
+  },
+  "clusterizacao": {
+    "k_otimo": 4,
+    "inercia": 731.86,
+    "silhouette": 0.4831,
+    "variancia_explicada_pca": [
+      0.5575,
+      0.1909
+    ],
+    "variancia_total_retida": 0.7484,
+    "cotovelo_k": [
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "cotovelo_inercia": [
+      1406.56,
+      972.17,
+      731.86,
+      647.78,
+      585.25,
+      544.71,
+      516.53
+    ],
+    "silhueta_scores": [
+      0.473,
+      0.4657,
+      0.4831,
+      0.467,
+      0.4589,
+      0.4275,
+      0.4274
+    ],
+    "perfis": {
+      "0": {
+        "nome": "Fluxo de Negócio Complexo",
+        "descricao": "Múltiplas regras, ramificações e alta densidade de casos de teste.",
+        "cor": "primary",
+        "centroide": {
+          "num_regras_negocio": 10.1,
+          "num_cenarios_bdd": 8.02,
+          "num_casos_teste": 16.33,
+          "num_edge_cases": 4.96,
+          "num_integracoes": 0.97,
+          "envolve_seguranca": 0.03,
+          "tamanho_descricao": 268.49
+        }
+      },
+      "1": {
+        "nome": "CRUD Simples",
+        "descricao": "Operações básicas com baixo acoplamento e esforço enxuto.",
+        "cor": "success",
+        "centroide": {
+          "num_regras_negocio": 2.34,
+          "num_cenarios_bdd": 2.03,
+          "num_casos_teste": 3.9,
+          "num_edge_cases": 1.96,
+          "num_integracoes": 0.12,
+          "envolve_seguranca": 0.04,
+          "tamanho_descricao": 87.56
+        }
+      },
+      "2": {
+        "nome": "Crítico / Segurança",
+        "descricao": "Foco em autenticação, proteção de dados e cenários sensíveis.",
+        "cor": "danger",
+        "centroide": {
+          "num_regras_negocio": 7.23,
+          "num_cenarios_bdd": 6.51,
+          "num_casos_teste": 12.56,
+          "num_edge_cases": 7.77,
+          "num_integracoes": 2.02,
+          "envolve_seguranca": 1.0,
+          "tamanho_descricao": 277.45
+        }
+      },
+      "3": {
+        "nome": "Integração Pesada",
+        "descricao": "Comunicação com APIs, mensageria e serviços de terceiros.",
+        "cor": "warning",
+        "centroide": {
+          "num_regras_negocio": 5.0,
+          "num_cenarios_bdd": 4.31,
+          "num_casos_teste": 10.94,
+          "num_edge_cases": 6.06,
+          "num_integracoes": 5.38,
+          "envolve_seguranca": 0.32,
+          "tamanho_descricao": 206.21
+        }
+      }
+    }
+  }
+}
