@@ -1,194 +1,120 @@
 {% extends "base.html" %}
 
-{% block title %}Classificação — Detecção de Risco de Bugs - QA Gen Insights{% endblock %}
+{% block title %}Risco de Defeito (Classificação) - QA Gen Portal{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12 mb-3">
-        <h1 class="mb-1">🛡️ Laboratório de Classificação: Detecção de Risco de Defeitos</h1>
+<div class="row mb-3">
+    <div class="col-md-12">
+        <h2 class="mb-1">Risco de Defeito em Produção (Classificação)</h2>
         <p class="text-muted">
-            Aprendizado supervisionado discreto para prever a probabilidade de falhas críticas escaparem para produção.
-            Compara <strong>Regressão Logística</strong> contra <strong>Árvore de Decisão</strong> utilizando <strong>Stratified K-Fold (5 Folds)</strong> e <strong>Calibração de Limiar (Threshold Tuning)</strong> focada em <em>Recall</em>.
+            Classifica o risco do requisito apresentar problemas em produção (Baixo, Médio ou Alto) usando <strong>Regressão Logística</strong>.
         </p>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- Formulário de Parâmetros e Limiar -->
+    <!-- Formulário -->
     <div class="col-lg-5">
-        <div class="card shadow-sm border-danger">
-            <div class="card-header bg-danger text-white">
-                <h5 class="mb-0">⚙️ Atributos do Requisito & Limiar</h5>
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Dados do Requisito</h5>
             </div>
             <div class="card-body">
+                {% if requisitos_db %}
+                <form method="POST" class="mb-3 pb-3 border-bottom">
+                    {% csrf_token %}
+                    <label for="requisito_id" class="form-label small text-muted">Preencher com requisito salvo:</label>
+                    <div class="input-group input-group-sm">
+                        <select class="form-select" id="requisito_id" name="requisito_id">
+                            <option value="">Selecione um requisito...</option>
+                            {% for req in requisitos_db %}
+                                <option value="{{ req.pk }}" {% if req.pk == req_selecionado_id %}selected{% endif %}>
+                                    #{{ req.pk }} - {{ req.titulo }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-outline-secondary" type="submit">Carregar</button>
+                    </div>
+                </form>
+                {% endif %}
+
                 <form method="POST">
                     {% csrf_token %}
-
-                    <!-- Controle de Limiar (Threshold) -->
-                    <div class="p-3 mb-3 bg-light rounded border border-warning">
-                        <label for="limiar" class="form-label d-flex justify-content-between align-items-center mb-1">
-                            <span><strong>🎯 Limiar de Decisão (Threshold):</strong></span>
-                            <span class="badge bg-warning text-dark fs-6" id="val_limiar">{{ limiar }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="limiar" name="limiar" 
-                               min="0.10" max="0.90" step="0.05" value="{{ limiar }}"
-                               oninput="document.getElementById('val_limiar').textContent = this.value">
-                        <small class="text-muted d-block mt-1">
-                            Limiar calibrado em <strong>0.35</strong> para elevar o <em>Recall</em>: prioriza alertar o time de QA mesmo diante de incerteza moderada.
-                        </small>
+                    <div class="mb-3">
+                        <label for="num_regras_negocio" class="form-label">Quantidade de Regras de Negócio</label>
+                        <input type="number" class="form-control" id="num_regras_negocio" name="num_regras_negocio"
+                               min="1" max="30" value="{{ inputs.num_regras_negocio }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_regras_negocio" class="form-label d-flex justify-content-between">
-                            <span><strong>Regras de Negócio:</strong></span>
-                            <span class="badge bg-primary" id="val_regras">{{ inputs.num_regras_negocio }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_regras_negocio" name="num_regras_negocio" 
-                               min="1" max="15" value="{{ inputs.num_regras_negocio }}"
-                               oninput="document.getElementById('val_regras').textContent = this.value">
+                        <label for="num_casos_teste" class="form-label">Quantidade de Casos de Teste</label>
+                        <input type="number" class="form-control" id="num_casos_teste" name="num_casos_teste"
+                               min="1" max="50" value="{{ inputs.num_casos_teste }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_cenarios_bdd" class="form-label d-flex justify-content-between">
-                            <span><strong>Cenários BDD (Gherkin):</strong></span>
-                            <span class="badge bg-secondary" id="val_cenarios">{{ inputs.num_cenarios_bdd }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_cenarios_bdd" name="num_cenarios_bdd" 
-                               min="1" max="12" value="{{ inputs.num_cenarios_bdd }}"
-                               oninput="document.getElementById('val_cenarios').textContent = this.value">
+                        <label for="num_integracoes" class="form-label">Integrações Externas (APIs, serviços)</label>
+                        <input type="number" class="form-control" id="num_integracoes" name="num_integracoes"
+                               min="0" max="15" value="{{ inputs.num_integracoes }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_casos_teste" class="form-label d-flex justify-content-between">
-                            <span><strong>Casos de Teste Estruturados:</strong></span>
-                            <span class="badge bg-secondary" id="val_casos">{{ inputs.num_casos_teste }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_casos_teste" name="num_casos_teste" 
-                               min="2" max="25" value="{{ inputs.num_casos_teste }}"
-                               oninput="document.getElementById('val_casos').textContent = this.value">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="num_edge_cases" class="form-label d-flex justify-content-between">
-                            <span><strong>Edge Cases & Rupturas Cobertas:</strong></span>
-                            <span class="badge bg-success" id="val_edge">{{ inputs.num_edge_cases }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_edge_cases" name="num_edge_cases" 
-                               min="1" max="10" value="{{ inputs.num_edge_cases }}"
-                               oninput="document.getElementById('val_edge').textContent = this.value">
-                        <small class="text-muted">Mais edge cases atuam como barreira de proteção reduzindo bugs.</small>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="num_integracoes" class="form-label d-flex justify-content-between">
-                            <span><strong>Integrações Externas:</strong></span>
-                            <span class="badge bg-warning text-dark" id="val_integracoes">{{ inputs.num_integracoes }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_integracoes" name="num_integracoes" 
-                               min="0" max="8" value="{{ inputs.num_integracoes }}"
-                               oninput="document.getElementById('val_integracoes').textContent = this.value">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="envolve_seguranca" class="form-label"><strong>Envolve Segurança / Autenticação?</strong></label>
+                        <label for="envolve_seguranca" class="form-label">Envolve Segurança / Autenticação?</label>
                         <select class="form-select" id="envolve_seguranca" name="envolve_seguranca">
-                            <option value="0" {% if inputs.envolve_seguranca == 0 %}selected{% endif %}>Não (Fluxo Padrão)</option>
-                            <option value="1" {% if inputs.envolve_seguranca == 1 %}selected{% endif %}>Sim (Autenticação, Tokens, LGPD, Pagamentos)</option>
+                            <option value="0" {% if inputs.envolve_seguranca == 0 %}selected{% endif %}>Não</option>
+                            <option value="1" {% if inputs.envolve_seguranca == 1 %}selected{% endif %}>Sim</option>
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="tamanho_descricao" class="form-label"><strong>Extensão da Descrição</strong> <small class="text-muted">(palavras)</small></label>
-                        <input type="number" class="form-control" id="tamanho_descricao" name="tamanho_descricao" 
-                               min="20" max="600" value="{{ inputs.tamanho_descricao }}">
-                    </div>
-
-                    <button type="submit" class="btn btn-danger w-100 py-2 fw-bold">
-                        ⚡ Avaliar Risco de Defeito
+                    <button type="submit" class="btn btn-primary w-100">
+                        Avaliar Risco
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Resultados e Métricas -->
+    <!-- Resultado -->
     <div class="col-lg-7">
-        <!-- Card de Classificação Predita -->
-        <div class="card shadow-sm border-{{ resultado.cor }} mb-4 text-center">
-            <div class="card-header bg-{{ resultado.cor }} text-white">
-                <h5 class="mb-0">🎯 Diagnóstico de Risco do Requisito</h5>
-            </div>
+        <div class="card shadow-sm mb-3 text-center">
             <div class="card-body py-4">
-                <span class="text-muted text-uppercase fw-bold small">Status de Risco Estimado</span>
-                <div class="my-2">
-                    <span class="badge bg-{{ resultado.cor }} fs-1 px-4 py-2">
+                <span class="text-muted small text-uppercase">Nível de Risco Estimado</span>
+                <div class="my-3">
+                    <span class="badge bg-{{ resultado.cor }} fs-3 px-4 py-2">
                         Risco {{ resultado.nivel_risco }} ({{ resultado.probabilidade_bug }}%)
                     </span>
                 </div>
-                <p class="text-muted mb-0">
-                    {% if resultado.gerou_alerta %}
-                        🚨 <strong>Alerta emitido:</strong> A probabilidade estimada superou o limiar de corte de {{ resultado.limiar_usado }}. Atenção reforçada requerida.
-                    {% else %}
-                        ✅ <strong>Sob controle:</strong> A probabilidade permaneceu abaixo do limiar de {{ resultado.limiar_usado }}.
-                    {% endif %}
+                <p class="text-muted small mb-0">
+                    Probabilidade estimada de ocorrência de falha caso os cenários críticos não sejam cobertos.
                 </p>
             </div>
         </div>
 
-        <!-- Tabela de Avaliação de Classificação -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h6 class="mb-0">📊 Avaliação Formal — Stratified 5-Fold Cross-Validation</h6>
-                <span class="badge bg-info">Métricas das Aulas</span>
-            </div>
-            <div class="card-body p-0">
-                <table class="table table-bordered table-striped mb-0 text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Algoritmo</th>
-                            <th>Acurácia</th>
-                            <th>Precisão</th>
-                            <th>Recall (TPR)</th>
-                            <th>F1-Score</th>
-                            <th>ROC-AUC</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="table-success fw-bold">
-                            <td class="text-start ps-3">Regressão Logística ⭐</td>
-                            <td>{{ metricas.logistica.accuracy }}</td>
-                            <td>{{ metricas.logistica.precision }}</td>
-                            <td><span class="badge bg-primary">{{ metricas.logistica.recall }}</span></td>
-                            <td>{{ metricas.logistica.f1 }}</td>
-                            <td><span class="badge bg-success">{{ metricas.logistica.roc_auc }}</span></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start ps-3">Árvore de Decisão (depth=4)</td>
-                            <td>{{ metricas.arvore.accuracy }}</td>
-                            <td>{{ metricas.arvore.precision }}</td>
-                            <td><span class="badge bg-secondary">{{ metricas.arvore.recall }}</span></td>
-                            <td>{{ metricas.arvore.f1 }}</td>
-                            <td><span class="badge bg-secondary">{{ metricas.arvore.roc_auc }}</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer bg-light small text-muted">
-                <em>Em bases desbalanceadas (~26% de bugs), a <strong>Área sob a Curva ROC (AUC)</strong> e o <strong>Recall</strong> são métricas essenciais para auditar a sensibilidade do classificador sem ilusão de acurácia.</em>
-            </div>
-        </div>
-
-        <!-- Curva ROC e Matriz de Confusão -->
-        {% if grafico %}
         <div class="card shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                <h6 class="mb-0">📈 Curva ROC e Matriz de Confusão</h6>
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Métricas do Classificador</h6>
             </div>
-            <div class="card-body text-center p-3">
-                <img src="data:image/png;base64,{{ grafico }}" alt="Curva ROC e Matriz de Confusão" class="img-fluid rounded border">
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-3">
+                        <div class="fs-5 fw-bold">{{ metricas.accuracy }}%</div>
+                        <small class="text-muted">Acurácia</small>
+                    </div>
+                    <div class="col-3">
+                        <div class="fs-5 fw-bold">{{ metricas.precision }}%</div>
+                        <small class="text-muted">Precisão</small>
+                    </div>
+                    <div class="col-3">
+                        <div class="fs-5 fw-bold">{{ metricas.recall }}%</div>
+                        <small class="text-muted">Recall</small>
+                    </div>
+                    <div class="col-3">
+                        <div class="fs-5 fw-bold">{{ metricas.f1 }}%</div>
+                        <small class="text-muted">F1-Score</small>
+                    </div>
+                </div>
             </div>
         </div>
-        {% endif %}
     </div>
 </div>
 {% endblock %}

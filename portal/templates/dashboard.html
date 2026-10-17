@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Dashboard - QA Gen Insights{% endblock %}
+{% block title %}Dashboard - QA Gen Portal{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div>
-                <h1 class="mb-1">📋 Painel Central de Requisitos</h1>
-                <p class="text-muted mb-0">Gerencie requisitos funcionais, artefatos gerados por IA e predições de Machine Learning.</p>
+                <h2 class="mb-1">Requisitos Cadastrados</h2>
+                <p class="text-muted mb-0">Acompanhe os requisitos submetidos, os cenários de teste e as estimativas.</p>
             </div>
-            <a href="{% url 'submeter' %}" class="btn btn-primary fw-bold">
-                ➕ Novo Requisito
+            <a href="{% url 'submeter' %}" class="btn btn-primary">
+                Novo Requisito
             </a>
         </div>
 
@@ -22,7 +22,7 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Título</th>
-                            <th>Requisito Funcional</th>
+                            <th>Descrição</th>
                             <th class="text-center">Status</th>
                             <th>Data</th>
                             <th class="text-center">Ações</th>
@@ -36,7 +36,6 @@
                             <td class="text-center">
                                 {% if req.processado %}
                                     <span class="badge bg-success">Processado</span>
-                                    <span class="badge bg-primary">🤖 ML Ativo</span>
                                 {% else %}
                                     <span class="badge bg-warning text-dark">Pendente</span>
                                 {% endif %}
@@ -45,11 +44,11 @@
                             <td class="text-center">
                                 {% if req.processado %}
                                     <a href="{% url 'resultado' req.pk %}" class="btn btn-sm btn-outline-primary">
-                                        Ver Artefatos & ML →
+                                        Ver Resultado
                                     </a>
                                 {% else %}
                                     <a href="{% url 'processar' req.pk %}" class="btn btn-sm btn-outline-success">
-                                        Processar com IA
+                                        Processar
                                     </a>
                                 {% endif %}
                             </td>
@@ -61,8 +60,7 @@
         </div>
         {% else %}
         <div class="alert alert-info">
-            <strong>Nenhum requisito cadastrado.</strong> 
-            Clique em "Novo Requisito" para começar a gerar testes com IA e predizer métricas de esforço e risco.
+            Nenhum requisito cadastrado ainda. Clique em "Novo Requisito" para adicionar o primeiro.
         </div>
         {% endif %}
     </div>

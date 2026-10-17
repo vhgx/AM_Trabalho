@@ -1,164 +1,122 @@
 {% extends "base.html" %}
 
-{% block title %}Regressão — Prever Esforço de Teste - QA Gen Insights{% endblock %}
+{% block title %}Previsão de Esforço (Regressão) - QA Gen Portal{% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-md-12 mb-3">
-        <h1 class="mb-1">📈 Laboratório de Regressão: Previsão de Esforço de Teste</h1>
+<div class="row mb-3">
+    <div class="col-md-12">
+        <h2 class="mb-1">Previsão de Esforço de Teste (Regressão)</h2>
         <p class="text-muted">
-            Modelagem contínua para estimar o volume de horas de teste manual e automação a partir das características do requisito.
-            Compara um modelo linear interpretável (<strong>LinearRegression</strong>) contra um comitê ensemble (<strong>RandomForestRegressor</strong>) avaliados via <strong>Validação Cruzada K-Fold (5 Folds)</strong>.
+            Estima o tempo necessário (em horas) para testar um requisito com base em 4 indicadores, usando <strong>Random Forest Regressor</strong>.
         </p>
     </div>
 </div>
 
 <div class="row g-4">
-    <!-- Formulário de Parâmetros -->
+    <!-- Formulário -->
     <div class="col-lg-5">
-        <div class="card shadow-sm border-primary">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">⚙️ Características do Requisito</h5>
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">Dados do Requisito</h5>
             </div>
             <div class="card-body">
+                {% if requisitos_db %}
+                <form method="POST" class="mb-3 pb-3 border-bottom">
+                    {% csrf_token %}
+                    <label for="requisito_id" class="form-label small text-muted">Preencher com requisito salvo:</label>
+                    <div class="input-group input-group-sm">
+                        <select class="form-select" id="requisito_id" name="requisito_id">
+                            <option value="">Selecione um requisito...</option>
+                            {% for req in requisitos_db %}
+                                <option value="{{ req.pk }}" {% if req.pk == req_selecionado_id %}selected{% endif %}>
+                                    #{{ req.pk }} - {{ req.titulo }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button class="btn btn-outline-secondary" type="submit">Carregar</button>
+                    </div>
+                </form>
+                {% endif %}
+
                 <form method="POST">
                     {% csrf_token %}
-                    
                     <div class="mb-3">
-                        <label for="num_regras_negocio" class="form-label d-flex justify-content-between">
-                            <span><strong>Regras de Negócio:</strong></span>
-                            <span class="badge bg-primary" id="val_regras">{{ inputs.num_regras_negocio }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_regras_negocio" name="num_regras_negocio" 
-                               min="1" max="15" value="{{ inputs.num_regras_negocio }}"
-                               oninput="document.getElementById('val_regras').textContent = this.value">
+                        <label for="num_regras_negocio" class="form-label">Quantidade de Regras de Negócio</label>
+                        <input type="number" class="form-control" id="num_regras_negocio" name="num_regras_negocio"
+                               min="1" max="30" value="{{ inputs.num_regras_negocio }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_cenarios_bdd" class="form-label d-flex justify-content-between">
-                            <span><strong>Cenários BDD (Gherkin):</strong></span>
-                            <span class="badge bg-secondary" id="val_cenarios">{{ inputs.num_cenarios_bdd }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_cenarios_bdd" name="num_cenarios_bdd" 
-                               min="1" max="12" value="{{ inputs.num_cenarios_bdd }}"
-                               oninput="document.getElementById('val_cenarios').textContent = this.value">
+                        <label for="num_casos_teste" class="form-label">Quantidade de Casos de Teste</label>
+                        <input type="number" class="form-control" id="num_casos_teste" name="num_casos_teste"
+                               min="1" max="50" value="{{ inputs.num_casos_teste }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_casos_teste" class="form-label d-flex justify-content-between">
-                            <span><strong>Casos de Teste Estruturados:</strong></span>
-                            <span class="badge bg-secondary" id="val_casos">{{ inputs.num_casos_teste }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_casos_teste" name="num_casos_teste" 
-                               min="2" max="25" value="{{ inputs.num_casos_teste }}"
-                               oninput="document.getElementById('val_casos').textContent = this.value">
+                        <label for="num_integracoes" class="form-label">Integrações Externas (APIs, serviços)</label>
+                        <input type="number" class="form-control" id="num_integracoes" name="num_integracoes"
+                               min="0" max="15" value="{{ inputs.num_integracoes }}">
                     </div>
 
                     <div class="mb-3">
-                        <label for="num_edge_cases" class="form-label d-flex justify-content-between">
-                            <span><strong>Edge Cases & Testes Extremos:</strong></span>
-                            <span class="badge bg-secondary" id="val_edge">{{ inputs.num_edge_cases }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_edge_cases" name="num_edge_cases" 
-                               min="1" max="10" value="{{ inputs.num_edge_cases }}"
-                               oninput="document.getElementById('val_edge').textContent = this.value">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="num_integracoes" class="form-label d-flex justify-content-between">
-                            <span><strong>Integrações Externas (APIs, Mensageria):</strong></span>
-                            <span class="badge bg-warning text-dark" id="val_integracoes">{{ inputs.num_integracoes }}</span>
-                        </label>
-                        <input type="range" class="form-range" id="num_integracoes" name="num_integracoes" 
-                               min="0" max="8" value="{{ inputs.num_integracoes }}"
-                               oninput="document.getElementById('val_integracoes').textContent = this.value">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="envolve_seguranca" class="form-label"><strong>Envolve Segurança / Autenticação?</strong></label>
+                        <label for="envolve_seguranca" class="form-label">Envolve Segurança / Autenticação?</label>
                         <select class="form-select" id="envolve_seguranca" name="envolve_seguranca">
-                            <option value="0" {% if inputs.envolve_seguranca == 0 %}selected{% endif %}>Não (Fluxo Padrão)</option>
-                            <option value="1" {% if inputs.envolve_seguranca == 1 %}selected{% endif %}>Sim (Autenticação, Tokens, LGPD, Pagamentos)</option>
+                            <option value="0" {% if inputs.envolve_seguranca == 0 %}selected{% endif %}>Não</option>
+                            <option value="1" {% if inputs.envolve_seguranca == 1 %}selected{% endif %}>Sim</option>
                         </select>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="tamanho_descricao" class="form-label"><strong>Extensão da Descrição</strong> <small class="text-muted">(palavras)</small></label>
-                        <input type="number" class="form-control" id="tamanho_descricao" name="tamanho_descricao" 
-                               min="20" max="600" value="{{ inputs.tamanho_descricao }}">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">
-                        ⚡ Calcular Previsão de Esforço
+                    <button type="submit" class="btn btn-primary w-100">
+                        Calcular Estimativa
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Resultados e Visualização -->
+    <!-- Resultado -->
     <div class="col-lg-7">
-        <!-- Card de Previsão -->
-        <div class="card shadow-sm border-success mb-4 text-center">
-            <div class="card-header bg-success text-white">
-                <h5 class="mb-0">🎯 Estimativa de Esforço Previsto</h5>
-            </div>
+        <div class="card shadow-sm mb-3 text-center">
             <div class="card-body py-4">
-                <span class="text-muted text-uppercase fw-bold small">Tempo Estimado de Homologação</span>
-                <div class="display-2 fw-bold text-success my-2">
+                <span class="text-muted small text-uppercase">Esforço Previsto</span>
+                <div class="display-4 fw-bold text-primary my-1">
                     {{ resultado.esforco_horas }} horas
                 </div>
-                <p class="text-muted mb-0">
-                    Previsão computada via modelo <strong>RandomForestRegressor</strong> treinado sobre o histórico de requisitos.
+                <p class="text-muted small mb-0">
+                    Estimativa para escrita e execução dos testes deste requisito.
                 </p>
             </div>
         </div>
 
-        <!-- Tabela Comparativa de Modelos -->
-        <div class="card shadow-sm mb-4">
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h6 class="mb-0">📊 Avaliação Formal — Validação Cruzada (5-Fold CV)</h6>
-                <span class="badge bg-info">Métricas de Regressão</span>
+        <div class="card shadow-sm mb-3">
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Desempenho do Modelo no Histórico</h6>
             </div>
-            <div class="card-body p-0">
-                <table class="table table-bordered table-striped mb-0 text-center">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Algoritmo</th>
-                            <th>R² (Coef. Determinação)</th>
-                            <th>MAE (Erro Médio Absoluto)</th>
-                            <th>RMSE (Raiz do Erro Quadrático)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="fw-bold text-start ps-3">Linear Regression (Baseline)</td>
-                            <td><span class="badge bg-secondary">{{ metricas.linear.r2 }}</span></td>
-                            <td>{{ metricas.linear.mae }} horas</td>
-                            <td>{{ metricas.linear.rmse }} horas</td>
-                        </tr>
-                        <tr class="table-success fw-bold">
-                            <td class="text-start ps-3">Random Forest (100 árvores) ⭐</td>
-                            <td><span class="badge bg-success">{{ metricas.rf.r2 }}</span></td>
-                            <td>{{ metricas.rf.mae }} horas</td>
-                            <td>{{ metricas.rf.rmse }} horas</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="card-footer bg-light small text-muted">
-                <em>O R² próximo a 1.0 indica excelente capacidade de explicação da variância total dos dados de teste.</em>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="fs-5 fw-bold">{{ metricas.r2 }}</div>
+                        <small class="text-muted">R² (Ajuste)</small>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-5 fw-bold">{{ metricas.mae }}h</div>
+                        <small class="text-muted">Erro Médio (MAE)</small>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-5 fw-bold">{{ metricas.rmse }}h</div>
+                        <small class="text-muted">RMSE</small>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Gráfico de Importâncias -->
         {% if grafico %}
         <div class="card shadow-sm">
-            <div class="card-header bg-secondary text-white">
-                <h6 class="mb-0">📉 Fatores que Mais Impactam o Esforço</h6>
+            <div class="card-header bg-light">
+                <h6 class="mb-0">Importância dos Indicadores</h6>
             </div>
-            <div class="card-body text-center p-3">
-                <img src="data:image/png;base64,{{ grafico }}" alt="Importância das Features" class="img-fluid rounded border">
+            <div class="card-body text-center">
+                <img src="data:image/png;base64,{{ grafico }}" alt="Importância dos atributos" class="img-fluid">
             </div>
         </div>
         {% endif %}

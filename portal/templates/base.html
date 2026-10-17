@@ -1,20 +1,19 @@
 {% load static %}
 {% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}QA Gen Insights - Aprendizado de Máquina{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'portal/css/style.css' %}">
+    <title>{% block title %}QA Gen Portal{% endblock %}</title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" href="{% static 'portal/css/style.css' %}?v=2">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
-                🧪 QA Gen <span class="badge bg-primary fs-6 fw-normal">Insights</span>
+            <a class="navbar-brand fw-semibold" href="{% url 'dashboard' %}">
+                QA Gen Portal
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -22,25 +21,22 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'dashboard' %}">📋 Requisitos</a>
+                        <a class="nav-link" href="{% url 'dashboard' %}">Requisitos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'submeter' %}">➕ Novo Requisito</a>
+                        <a class="nav-link" href="{% url 'submeter' %}">Novo Requisito</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-info fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            🤖 Laboratórios de ML
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Machine Learning
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="{% url 'ml_regressao' %}">📈 Regressão (Esforço de Teste)</a></li>
-                            <li><a class="dropdown-item" href="{% url 'ml_classificacao' %}">🛡️ Classificação (Risco de Defeito)</a></li>
-                            <li><a class="dropdown-item" href="{% url 'ml_clusterizacao' %}">🔬 Clusterização (Perfis de Requisitos)</a></li>
+                            <li><a class="dropdown-item" href="{% url 'ml_regressao' %}">Previsão de Esforço (Regressão)</a></li>
+                            <li><a class="dropdown-item" href="{% url 'ml_classificacao' %}">Risco de Defeito (Classificação)</a></li>
+                            <li><a class="dropdown-item" href="{% url 'ml_clusterizacao' %}">Agrupamento de Perfis (Clusterização)</a></li>
                         </ul>
                     </li>
                 </ul>
-                <span class="navbar-text small text-light opacity-75">
-                    Disciplina: Aprendizado de Máquina (INF/UFG)
-                </span>
             </div>
         </div>
     </nav>
@@ -49,17 +45,14 @@
         {% block content %}{% endblock %}
     </div>
 
-    <footer class="container-fluid mt-5 py-4 bg-light border-top text-center text-muted small">
-        <div class="container">
-            <p class="mb-1">
-                <strong>QA Gen Insights</strong> &mdash; Módulo de Machine Learning do Projeto Aplicado (PA)
-            </p>
-            <p class="mb-0">
-                Evolução sobre o QA Gen Web Portal (Framework) &bull; Pós-Graduação em Inteligência Artificial &bull; INF / UFG
-            </p>
-        </div>
+    <footer class="container mt-5 mb-3">
+        <hr>
+        <p class="text-muted text-center small">
+            QA Gen Portal &mdash; Pós-Graduação em Inteligência Artificial (INF/UFG)
+        </p>
     </footer>
 
+    {% bootstrap_javascript %}
     {% block extra_js %}{% endblock %}
 </body>
 </html>

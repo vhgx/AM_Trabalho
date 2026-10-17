@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
 from .models import Requisito
 from .services import run_qa_pipeline
-from .ml.features import FEATURE_NAMES, extrair_features_requisito
+from .ml.features import extrair_features_requisito
 from .ml_services import (
     carregar_modelos,
     prever_esforco,
@@ -10,16 +9,14 @@ from .ml_services import (
     atribuir_perfil,
     obter_insights_requisito,
     gerar_grafico_regressao_importancia,
-    gerar_grafico_classificacao_roc,
-    gerar_grafico_clusterizacao_pca,
+    gerar_grafico_clusterizacao,
 )
 
 
 def dashboard(request):
     """Painel Central (Dashboard) - exibe requisitos submetidos anteriormente."""
     requisitos = Requisito.objects.all()
-    dicionario = {'requisitos': requisitos}
-    return render(request, 'dashboard.html', dicionario)
+    return render(request, 'dashboard.html', {'requisitos': requisitos})
 
 
 def submeter(request):
@@ -29,12 +26,11 @@ def submeter(request):
         descricao = request.POST.get('descricao', '').strip()
 
         if not titulo or not descricao:
-            dicionario = {
+            return render(request, 'submeter.html', {
                 'erro': 'Título e Requisito Funcional são campos obrigatórios.',
                 'titulo': titulo,
                 'descricao': descricao,
-            }
-            return render(request, 'submeter.html', dicionario)
+            })
 
         requisito = Requisito.objects.create(
             titulo=titulo,
@@ -61,166 +57,117 @@ def processar(request, pk):
             requisito.processado = True
             requisito.save()
         except Exception as e:
-            dicionario = {
+            return render(request, 'erro.html', {
                 'erro': f'Falha na comunicação com o provedor de IA: {str(e)}',
                 'requisito': requisito,
-            }
-            return render(request, 'erro.html', dicionario)
+            })
 
     return redirect('resultado', pk=requisito.pk)
 
 
 def resultado(request, pk):
-    """
-    Exibição Rica e Multidimensional dos resultados gerados.
-    Inclui os artefatos tradicionais de QA e a aba 'Insights de ML' calculada
-    automaticamente a partir dos artefatos produzidos pelo LLM.
-    """
+    """Exibe os artefatos de teste gerados e o resumo de estimativas via ML."""
     requisito = get_object_or_404(Requisito, pk=pk)
     insights = None
-    
+
     if requisito.processado:
         try:
             insights = obter_insights_requisito(requisito)
         except Exception as e:
-            insights = {'erro': f'Não foi possível computar os insights de ML: {str(e)}'}
+            insights = {'erro': f'Não foi possível calcular as estimativas: {str(e)}'}
 
-    dicionario = {
+    return render(request, 'resultado.html', {
         'requisito': requisito,
         'insights': insights,
-    }
-    return render(request, 'resultado.html', dicionario)
+    })
 
 
-# =====================================================================
-# Views de Machine Learning (Laboratórios Interativos)
-# =====================================================================
-
-def ml_regressao(request):
-    """
-    Laboratório de Regressão — Prever Esforço de Teste (em horas).
-    Exibe comparativo formal entre Linear Regression e RandomForestRegressor (K-Fold CV, R², MAE, RMSE).
-    """
-    cache = carregar_modelos()
-    metricas = cache['metricas']['regressao']
-    
-    # Valores padrão de entrada
-    inputs = {
-        'num_regras_negocio': 5,
-        'num_cenarios_bdd': 3,
-        'num_casos_teste': 8,
-        'num_edge_cases': 3,
-        'num_integracoes': 1,
-        'envolve_seguranca': 0,
-        'tamanho_descricao': 120,
-    }
-    resultado = None
-    
-    if request.method == 'POST':
-        for campo in inputs.keys():
-            val = request.POST.get(campo)
-            if val is not None:
-                inputs[campo] = int(val)
-                
-        resultado = prever_esforco(inputs)
-    else:
-        resultado = prever_esforco(inputs)
-        
-    grafico = gerar_grafico_regressao_importancia()
-    
-    contexto = {
-        'inputs': inputs,
-        'resultado': resultado,
-        'metricas': metricas,
-        'grafico': grafico,
-    }
-    return render(request, 'ml_regressao.html', contexto)
-
-
-def ml_classificacao(request):
-    """
-    Laboratório de Classificação — Detecção Preventiva de Bugs Críticos em Produção.
-    Exibe métricas formais (Acurácia, Precisão, Recall, F1, ROC-AUC) e permite ajuste do limiar.
-    """
-    cache = carregar_modelos()
-    metricas = cache['metricas']['classificacao']
-    
-    inputs = {
-        'num_regras_negocio': 6,
-        'num_cenarios_bdd': 4,
-        'num_casos_teste': 10,
-        'num_edge_cases': 2,
-        'num_integracoes': 2,
-        'envolve_seguranca': 1,
-        'tamanho_descricao': 180,
-    }
-    limiar = 0.35
-    
-    if request.method == 'POST':
-        for campo in inputs.keys():
-            val = request.POST.get(campo)
-            if val is not None:
-                inputs[campo] = int(val)
-        try:
-            limiar = float(request.POST.get('limiar', 0.35))
-        except ValueError:
-            limiar = 0.35
-            
-    resultado = prever_risco(inputs, limiar=limiar)
-    grafico = gerar_grafico_classificacao_roc()
-    
-    contexto = {
-        'inputs': inputs,
-        'limiar': limiar,
-        'resultado': resultado,
-        'metricas': metricas,
-        'grafico': grafico,
-    }
-    return render(request, 'ml_classificacao.html', contexto)
-
-
-def ml_clusterizacao(request):
-    """
-    Laboratório de Clusterização — Agrupamento Não Supervisionado e Perfil de Requisitos.
-    Apresenta Método do Cotovelo, Coeficiente de Silhueta, Redução Dimensional PCA 2D e Centróides.
-    """
-    cache = carregar_modelos()
-    metricas = cache['metricas']['clusterizacao']
-    requisitos_db = Requisito.objects.filter(processado=True)[:10]
-    
-    inputs = {
-        'num_regras_negocio': 5,
-        'num_cenarios_bdd': 3,
-        'num_casos_teste': 8,
-        'num_edge_cases': 3,
-        'num_integracoes': 1,
-        'envolve_seguranca': 0,
-        'tamanho_descricao': 120,
-    }
+def _ler_inputs_formulario(request, padrao):
+    """Lê os 4 parâmetros do formulário ou carrega de um requisito salvo."""
+    inputs = dict(padrao)
     req_selecionado_id = None
-    
+
     if request.method == 'POST':
         req_id = request.POST.get('requisito_id')
         if req_id and req_id.isdigit():
-            req_selecionado = Requisito.objects.filter(pk=int(req_id)).first()
-            if req_selecionado:
-                inputs = extrair_features_requisito(req_selecionado)
-                req_selecionado_id = req_selecionado.pk
+            req = Requisito.objects.filter(pk=int(req_id)).first()
+            if req:
+                inputs = extrair_features_requisito(req)
+                req_selecionado_id = req.pk
         else:
             for campo in inputs.keys():
                 val = request.POST.get(campo)
                 if val is not None:
-                    inputs[campo] = int(val)
-                    
-    resultado = atribuir_perfil(inputs)
-    grafico = gerar_grafico_clusterizacao_pca(destacar_ponto=resultado['coord_pca_2d'])
-    
-    contexto = {
-        'inputs': inputs,
-        'resultado': resultado,
-        'metricas': metricas,
-        'grafico': grafico,
-        'requisitos_db': requisitos_db,
-        'req_selecionado_id': req_selecionado_id,
+                    try:
+                        inputs[campo] = int(val)
+                    except ValueError:
+                        pass
+
+    return inputs, req_selecionado_id
+
+
+def ml_regressao(request):
+    """Previsão de esforço de teste em horas (Regressão)."""
+    cache = carregar_modelos()
+    padrao = {
+        'num_regras_negocio': 4,
+        'num_casos_teste': 8,
+        'num_integracoes': 1,
+        'envolve_seguranca': 0,
     }
-    return render(request, 'ml_clusterizacao.html', contexto)
+    inputs, req_selecionado_id = _ler_inputs_formulario(request, padrao)
+    resultado_reg = prever_esforco(inputs)
+    grafico = gerar_grafico_regressao_importancia()
+
+    return render(request, 'ml_regressao.html', {
+        'inputs': inputs,
+        'resultado': resultado_reg,
+        'metricas': cache['metricas']['regressao'],
+        'grafico': grafico,
+        'requisitos_db': Requisito.objects.filter(processado=True)[:10],
+        'req_selecionado_id': req_selecionado_id,
+    })
+
+
+def ml_classificacao(request):
+    """Classificação de risco de defeito em produção (Supervisionado)."""
+    cache = carregar_modelos()
+    padrao = {
+        'num_regras_negocio': 6,
+        'num_casos_teste': 10,
+        'num_integracoes': 2,
+        'envolve_seguranca': 1,
+    }
+    inputs, req_selecionado_id = _ler_inputs_formulario(request, padrao)
+    resultado_clf = prever_risco(inputs)
+
+    return render(request, 'ml_classificacao.html', {
+        'inputs': inputs,
+        'resultado': resultado_clf,
+        'metricas': cache['metricas']['classificacao'],
+        'requisitos_db': Requisito.objects.filter(processado=True)[:10],
+        'req_selecionado_id': req_selecionado_id,
+    })
+
+
+def ml_clusterizacao(request):
+    """Agrupamento de requisitos por perfil (Não Supervisionado - K-Means)."""
+    cache = carregar_modelos()
+    padrao = {
+        'num_regras_negocio': 5,
+        'num_casos_teste': 8,
+        'num_integracoes': 1,
+        'envolve_seguranca': 0,
+    }
+    inputs, req_selecionado_id = _ler_inputs_formulario(request, padrao)
+    resultado_clust = atribuir_perfil(inputs)
+    grafico = gerar_grafico_clusterizacao(features_atuais=inputs)
+
+    return render(request, 'ml_clusterizacao.html', {
+        'inputs': inputs,
+        'resultado': resultado_clust,
+        'metricas': cache['metricas']['clusterizacao'],
+        'grafico': grafico,
+        'requisitos_db': Requisito.objects.filter(processado=True)[:10],
+        'req_selecionado_id': req_selecionado_id,
+    })
