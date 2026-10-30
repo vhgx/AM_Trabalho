@@ -2,8 +2,6 @@
 
 Plataforma web em Django para geração automatizada de casos de teste a partir de requisitos funcionais (via LLM) e estimativas de qualidade usando Aprendizado de Máquina (`scikit-learn`).
 
-Projeto desenvolvido para a Pós-Graduação em Inteligência Artificial (INF/UFG).
-
 ---
 
 ## Funcionalidades
